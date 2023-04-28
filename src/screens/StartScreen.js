@@ -11,7 +11,7 @@ const StartScreen = ({ navigation }) => {
       <VStack width={'100%'} style={styles.verticalStack}>
         <Image  size={150} source={Logo} alt="Mi Logo" />
         <Box
-        paddingBottom={5}
+        paddingBottom={10}
         flex={1} 
         safeAreaTop 
         width="100%" 

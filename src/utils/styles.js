@@ -13,6 +13,13 @@ const styles = extendTheme({
     justifyContent: 'center',
     backgroundColor: 'white',
   },
+  containerSign: {
+    flex: 1,
+    alignItems: 'center',
+    justifyContent: 'center',
+    backgroundColor: 'white',
+
+  },
   text: {
     fontSize: 24,
     color: 'blue',
@@ -20,18 +27,18 @@ const styles = extendTheme({
   },
   buttonBlack: {
     width: '95%',
-    height: 22,
+    height: '100%',
     backgroundColor: 'black',
     paddingHorizontal: 20,
-    paddingVertical: 10,
+    paddingVertical: 5,
     borderRadius: 5,
   },
   buttonCian: {
     width: '95%',
-    height: 22,
+    height: '100%',
     backgroundColor: '#024959',
     paddingHorizontal: 20,
-    paddingVertical: 10,
+    paddingVertical: 5,
     borderRadius: 5,
   },
   container: {
@@ -42,40 +49,30 @@ const styles = extendTheme({
   },
   verticalStack:{
     height:"100%",
-    space: 4,
+    space: 3,
     alignItems:"center",
     justifyContent:"center",
-
-
   },
   verticalStackHome:{
     height:"100%",
     alignItems:"center",
     justifyContent:"center",
-
-
-  }
-  ,
-
+  },
   headings:{
     alignItems: 'center',
     justifyContent: 'center',
     marginBottom: 5,
-    size: 'lg',
+    fontSize: 14,
     color: '#374151',
     fontWeight: "semibold",
-    _dark : {color:'#F9FAFB'},
-    
-
+  
   },
- 
   smallHeading:{
-    fontSize: 'sm',
+    fontSize: 12,
     color: '#374151',
-    _dark: {color: '#F9FAFB'},
-    fontWeight: 'medium'
-  }
- 
+    
+    fontWeight: 'medium',
+  },
 });
 
 export default styles;

@@ -7,7 +7,7 @@ const SelectCountry = () => {
         <Select accessibilityLabel="Country" placeholder="Country" _selectedItem={{
         bg: "teal.600",
         endIcon: <CheckIcon size={3} />
-      }} mt="1">
+      }}>
           <Select.Item label="Flag Mexico" value="+52 1" />
           <Select.Item label="Flag USA" value="+001" />
           <Select.Item label="Flag Argentina" value="+54" />
