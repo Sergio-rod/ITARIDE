@@ -9,7 +9,6 @@ const styles = extendTheme({
   },
   containerHome: {
     flex: 1,
-    alignItems: 'center',
     justifyContent: 'center',
     backgroundColor: 'white',
   },
@@ -34,11 +33,9 @@ const styles = extendTheme({
     borderRadius: 5,
   },
   buttonCian: {
-    width: '95%',
+    width: '100%',
     height: '100%',
     backgroundColor: '#024959',
-    paddingHorizontal: 20,
-    paddingVertical: 5,
     borderRadius: 5,
   },
   container: {

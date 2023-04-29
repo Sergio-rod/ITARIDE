@@ -1,112 +1,53 @@
-import * as React from "react";
-import {
-  Box,
-  Heading,
-  VStack,
-  FormControl,
-  Input,
-  Button,
-  Center,
-  NativeBaseProvider,
-  HStack,
-  Link,
-  View
-} from "native-base";
-import styles from "../utils/styles";
-import SelectCountry from "../components/SelectCountry";
 
-const SignUpScreen = ({ navigation }) => {
-  return (
 
-    <View  flex={1} style={styles.containerSign}>
-    
-    <Center w="100%" flex={1}>
-      <Box flex={1} safeArea p="2" w="100%" maxW="290" py="8">
-
-        
-        <Box alignItems={'center'} marginBottom={'5'}>
+        <Box alignItems={'left'} marginBottom={'5'}>
           <Heading style={styles.headings}>
-            Sign Up
+            Hola, Ganzo
           </Heading>
         </Box>
 
-
-        <Heading style={styles.smallHeading} >
-          Please, fill the fields:
-        </Heading>
-        <VStack space={3} mt="5">
-          <FormControl.Label>Phone Number</FormControl.Label>
-
-          <HStack space={2}>
-
-            <Box flex={1} alignItems={'center'} justifyItems={'center'} justifyContent={'center'} alignContent={'center'}>
-
-              <SelectCountry />
-            </Box>
-            <Box flex={3}>
-              <FormControl>
-                <Input flex={3} />
-              </FormControl>
-            </Box>
-          </HStack>
-
-          <HStack space={2}>
-            <Box flex={1}>
-              <FormControl.Label>CAMPUS</FormControl.Label>
-              <SelectCountry />
-            </Box>
-            <Box flex={3}>
-              <FormControl>
-                <FormControl.Label>Control number</FormControl.Label>
-                <Input type="text" />
-              </FormControl>
-
-            </Box>
-
-          </HStack>
-
-          <FormControl>
-            <FormControl.Label>Institute Mail</FormControl.Label>
-            <Input type="text" />
-          </FormControl>
-          
           <Box
-            flex={1} 
-            safeAreaTop 
-            width="100%" 
-            maxW="300px"
-              position="absolute" 
-              bottom={0}
-              alignItems="center"
+            flex={1}
+            borderWidth={1}
+            borderColor={'red'}
+            borderRadius={'full'}
+            overflow={'hidden'} // Agregar esta propiedad para recortar el contenido
           >
+            <Avatar size={'2xl'}>
+              <Image
+                source={Ganzo}
+                alt={'Avatar'}
+                resizeMode={'cover'}
+                style={{ width: '100%', height: '100%' }} // Ajustar el ancho y alto de la imagen
 
-
-            <Button style={styles.buttonCian} mt={2}
-              onPress={() => navigation.navigate(screen.authenticated)}> Sign Up </Button>
-
+              />
+            </Avatar>
           </Box>
 
+          <Box flex={1} borderWidth={1} borderColor={'red'} borderRadius={10} p={5}>
+            <VStack spacing={2}>
+              <Text>
+                A little of me:
+              </Text>
+              <Text>
+                Total travels:
+              </Text>
 
-          <Box
-           height={60}
-           safeAreaTop 
-           safeAreaBottom
-           width="100%" 
-           maxW="300px"
-           alignItems="center"
-         
-          >
-            <Link mt={110} onPress={() => handleLinkPress()} colorScheme="cyan">
-              Already have account? find It
-            </Link>
+              <HStack justifyContent={'center'} mt={5}>
+
+                <Box borderWidth={1} borderColor={'red'} borderRadius={10} mr={2}>
+                  <Button>
+                    Botón 1
+                  </Button>
+                </Box>
+
+                <Box borderWidth={1} borderColor={'red'} borderRadius={10} ml={2}>
+                  <Button>
+                    Botón 2
+                  </Button>
+                </Box>
+
+              </HStack>
+
+            </VStack>
           </Box>
-
-
-        </VStack>
-      </Box>
-    </Center>
-    </View>
-  );
-};
-
-export default SignUpScreen;

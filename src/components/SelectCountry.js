@@ -3,7 +3,7 @@ import { FormControl, Select, Center, CheckIcon, WarningOutlineIcon, NativeBaseP
 
 const SelectCountry = () => {
   return <>
-      <FormControl isRequired isInvalid>
+      <FormControl isRequired >
         <Select accessibilityLabel="Country" placeholder="Country" _selectedItem={{
         bg: "teal.600",
         endIcon: <CheckIcon size={3} />
