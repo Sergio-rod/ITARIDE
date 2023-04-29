@@ -26,17 +26,14 @@ const styles = extendTheme({
   },
   buttonBlack: {
     width: '95%',
-    height: '100%',
     backgroundColor: 'black',
-    paddingHorizontal: 20,
-    paddingVertical: 5,
     borderRadius: 5,
   },
   buttonCian: {
-    width: '100%',
-    height: '100%',
+    width: '95%',
     backgroundColor: '#024959',
     borderRadius: 5,
+    textAlign: 'center'
   },
   container: {
     flex: 1,
@@ -45,6 +42,7 @@ const styles = extendTheme({
     backgroundColor: '#007FA3',
   },
   verticalStack:{
+    width:'100%',
     height:"100%",
     space: 3,
     alignItems:"center",

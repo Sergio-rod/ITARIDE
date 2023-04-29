@@ -20,11 +20,11 @@ const SignUpScreen = ({ navigation }) => {
   return (
     <View  flex={1} style={styles.containerSign}>
 
-      <Center width={'85%'} height='100%' >
+      <Center alignSelf={'center'} width={'85%'} height='100%' >
 
-        <VStack space={2}  alignItems={'center'}>
+        <VStack style={styles.verticalStack}>
 
-          <Box paddingBottom={10} flex={1} alignItems={'center'} marginBottom={'5'} justifyContent={'center'}>
+          <Box paddingBottom={5} flex={1} alignItems={'center'} marginBottom={'5'} justifyContent={'center'}>
             <Heading style={styles.headings}>
               Sign Up
             </Heading>
@@ -35,7 +35,7 @@ const SignUpScreen = ({ navigation }) => {
           </Heading>
 
 
-          <HStack space={2}>
+          <HStack flex={2} space={2}>
 
             <Box flex={1}>
               
@@ -52,7 +52,7 @@ const SignUpScreen = ({ navigation }) => {
             </Box>
           </HStack>
 
-          <HStack space={2}>
+          <HStack flex={2} space={2}>
             <Box flex={1}>
               <FormControl.Label>CAMPUS</FormControl.Label>
               <SelectCountry />
@@ -68,41 +68,35 @@ const SignUpScreen = ({ navigation }) => {
 
           </HStack>
 
-          <FormControl>
+          <Box flex={2}>
+          <FormControl flex={1}>
             <FormControl.Label>Institute Mail</FormControl.Label>
-            <Input type="text" />
+            <Input width={'100%'} type="text" />
           </FormControl>
 
+
+          </Box>
+
+          
+
           <Box
-            flex={1}
-            safeAreaTop
+          flex={2}
             width="100%"
-            maxW="300px"
-            bottom={0}
             alignItems="center"
-            justifyContent='center'
-            justifyItems={'center'}
           >
 
-
-            <Button alignSelf={'center'} style={styles.buttonCian} mt={2}
+            <Button  alignSelf={'center'} style={styles.buttonCian} mt={2}
               onPress={() =>{
               console.log("buton clicked",screen.authenticated);
 
-              navigation.navigate(screen.authenticated);}}> Sign Up </Button>
+              navigation.navigate(screen.authenticated);}}>Sign Up </Button>
 
           </Box>
 
 
-          <Box
-            height={60}
-            safeAreaTop
-            safeAreaBottom
-            width="100%"
-            maxW="300px"
-            alignItems="center"
-            justifyContent='center'
-
+          <Box flex={2}
+          alignSelf={'center'}
+            
           >
             <Link mt={60} onPress={() => handleLinkPress()} colorScheme="cyan">
               Already have account? find It

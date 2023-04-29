@@ -8,7 +8,7 @@ const StartScreen = ({ navigation }) => {
     <>
     <View style={styles.container}>
       <Center width='100%' height='100%'>
-      <VStack width={'100%'} style={styles.verticalStack}>
+      <VStack style={styles.verticalStack}>
         <Image  size={150} source={Logo} alt="Mi Logo" />
         <Box
         paddingBottom={10}
