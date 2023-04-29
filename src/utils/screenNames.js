@@ -6,6 +6,7 @@ export default screen = {
     settings: 'Settings Screen',
     history: 'History Screen',
     authenticated: 'Authenticated Screen',
+    profile: 'Profile Screen'
 
 
 };

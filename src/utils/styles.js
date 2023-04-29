@@ -68,6 +68,8 @@ const styles = extendTheme({
     
     fontWeight: 'medium',
   },
+
+
 });
 
 export default styles;
