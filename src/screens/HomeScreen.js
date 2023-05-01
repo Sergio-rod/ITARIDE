@@ -40,12 +40,12 @@ const HomeScreen = ({ navigation }) => {
 
           <Box flex={1} flexDirection={'row'} borderWidth={1} borderColor={'red'} borderRadius={10} p={5}>
             <VStack spacing={2}>
-              <Text>
+              {/* <Text>
                 A little of me:
               </Text>
               <Text>
                 Total travels:
-              </Text>
+              </Text> */}
 
               <HStack justifyContent={'center'} mt={5}>
 

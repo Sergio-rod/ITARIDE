@@ -6,6 +6,7 @@ import HistoryScreen from '../screens/HistoryScreen';
 import HomeScreen from '../screens/HomeScreen';
 import { Ionicons } from '@expo/vector-icons';
 import ProfileScreen from '../screens/ProfileScreen';
+import ChatsScreen from '../screens/ChatsScreen';
 
 
 const Tab = createBottomTabNavigator();
@@ -35,15 +36,15 @@ const BottomTabNavigator = () => {
       />
       <Tab.Screen
         name={screen.profile}
-        component={ProfileScreen}
+        component={ChatsScreen}
         options={{
           tabBarIcon: ({ focused, size }) => (
             <Ionicons 
-            name={focused ? 'person' : 'person-outline'} 
+            name={focused ? 'chatbubbles' : 'chatbubbles-outline'} 
             size={size} 
             color={focused ? '#024959' : 'gray'} />
           ),
-          tabBarLabel: 'Profile',
+          tabBarLabel: 'Chats',
           tabBarLabelStyle:{
             color: '#024959'
           }

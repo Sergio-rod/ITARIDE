@@ -68,6 +68,25 @@ const styles = extendTheme({
     
     fontWeight: 'medium',
   },
+  containerFlat: {
+    flex: 1,
+    padding: 16
+  },
+  settingButton: {
+    marginVertical: 8,
+    height: 50,
+    justifyContent: 'flex-start',
+    backgroundColor: 'white' // Cambiar el color de fondo a blanco
+  },
+  settingIcon: {
+    fontSize: 20,
+    color: '#024959'
+  },
+  settingText: {
+    fontSize: 16,
+    marginLeft: 16,
+    color: '#024959'
+  }
 
 
 });
