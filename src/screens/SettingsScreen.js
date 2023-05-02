@@ -4,6 +4,7 @@ import { Button } from 'native-base';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import styles from '../utils/styles';
 
+
 const SettingsScreen = () => {
 
   // Definir una lista de configuraciones con sus respectivos íconos

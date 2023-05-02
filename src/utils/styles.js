@@ -80,7 +80,7 @@ const styles = extendTheme({
   },
   settingIcon: {
     fontSize: 20,
-    color: '#024959'
+    color: '#024959',
   },
   settingText: {
     fontSize: 16,
