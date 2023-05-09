@@ -41,31 +41,31 @@ const styles = extendTheme({
     height: '100%',
     backgroundColor: '#007FA3',
   },
-  verticalStack:{
-    width:'100%',
-    height:"100%",
+  verticalStack: {
+    width: '100%',
+    height: "100%",
     space: 3,
-    alignItems:"center",
-    justifyContent:"center",
+    alignItems: "center",
+    justifyContent: "center",
   },
-  verticalStackHome:{
-    height:"100%",
-    alignItems:"center",
-    justifyContent:"center",
+  verticalStackHome: {
+    height: "100%",
+    alignItems: "center",
+    justifyContent: "center",
   },
-  headings:{
+  headings: {
     alignItems: 'center',
     justifyContent: 'center',
     marginBottom: 5,
     fontSize: 14,
     color: '#374151',
     fontWeight: "semibold",
-  
+
   },
-  smallHeading:{
+  smallHeading: {
     fontSize: 12,
     color: '#374151',
-    
+
     fontWeight: 'medium',
   },
   containerFlat: {
@@ -86,8 +86,31 @@ const styles = extendTheme({
     fontSize: 16,
     marginLeft: 16,
     color: '#024959'
-  }
+  },
+  boxHistory: {
+    alignItems: 'center',
 
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+
+  },historyIcon: {
+    marginLeft: 10,
+    fontSize: 20,
+    color: '#024959',
+  },
+  historyText: {
+    fontSize:16,
+    flexDirection: 'row',
+    alignItems: 'center',
+    color: '#024959',
+    paddingRight:10 ,
+  },
+  historyCost:{
+    fontSize:16,
+    flexDirection: 'row',
+    alignItems: 'center',
+    color: '#024959',
+  },
 
 });
 

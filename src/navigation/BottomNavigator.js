@@ -35,7 +35,7 @@ const BottomTabNavigator = () => {
         }}
       />
       <Tab.Screen
-        name={screen.profile}
+        name={screen.chats}
         component={ChatsScreen}
         options={{
           tabBarIcon: ({ focused, size }) => (
