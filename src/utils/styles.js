@@ -12,6 +12,16 @@ const styles = extendTheme({
     justifyContent: 'center',
     backgroundColor: 'white',
   },
+    containerRider: {
+    flex: 1,
+    justifyContent: 'center',
+    backgroundColor: 'white',
+  },
+  containerPassenger: {
+    flex: 1,
+    justifyContent: 'center',
+    backgroundColor: 'white',
+  },
   containerSign: {
     flex: 1,
     alignItems: 'center',

@@ -3,11 +3,16 @@ export default screen = {
     start: 'Start Screen',
     signUp: 'SignUp Screen',
     home: 'Home Screen',
+    homeStack:'Home Stack',
     settings: 'Settings Screen',
     history: 'History Screen',
     authenticated: 'Authenticated Screen',
     profile: 'Profile Screen',
-    chats: 'Chats Screen'
+    chats: 'Chats Screen',
+    driver: 'Driver Screen',
+    passenger: 'Passenger Screen',
+    trip:'Trip Screen',
+    ride: 'Ride Screen'
 
 
 };

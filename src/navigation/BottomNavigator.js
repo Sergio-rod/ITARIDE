@@ -7,7 +7,8 @@ import HomeScreen from '../screens/HomeScreen';
 import { Ionicons } from '@expo/vector-icons';
 import ProfileScreen from '../screens/ProfileScreen';
 import ChatsScreen from '../screens/ChatsScreen';
-
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import HomeStackNavigator from './HomeStack';
 
 const Tab = createBottomTabNavigator();
 
@@ -15,11 +16,11 @@ const BottomTabNavigator = () => {
 
   return (
 
-    <Tab.Navigator initialRouteName={screen.home}>
+    <Tab.Navigator  initialRouteName={screen.home} screenOptions={{headerShown: false}}>
 
       <Tab.Screen
-        name={screen.home}
-        component={HomeScreen}
+        name={screen.homeStack}
+        component={HomeStackNavigator}
         options={{
           tabBarIcon: ({ focused, size }) => (
 

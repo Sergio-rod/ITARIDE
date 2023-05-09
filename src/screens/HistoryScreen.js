@@ -8,12 +8,12 @@ import Ionicons from 'react-native-vector-icons/Ionicons';
 
 
 const settingsList = [
-  { destination: 'TECNM', icon: 'location-outline', money: 54 },
-  {  destination: 'Calvillo', icon: 'location-outline',money: 54  },
-  {  destination: 'Jesus María', icon: 'location-outline',money: 54  },
-  { destination: 'Campestre', icon: 'location-outline',money: 54  },
-  {  destination: 'Morelos', icon: 'location-outline' ,money: 54 },
-  {  destination: 'Bosques', icon: 'location-outline',money: 54  }
+  { destination: 'TECNM', icon: 'location-outline', money: 'Today - 05/08/2023' },
+  {  destination: 'Calvillo', icon: 'location-outline',money: 'Today - 05/08/2023'   },
+  {  destination: 'Jesus María', icon: 'location-outline',money: 'Today - 05/08/2023'  },
+  { destination: 'Campestre', icon: 'location-outline',money: 'Today - 05/08/2023' },
+  {  destination: 'Morelos', icon: 'location-outline' ,money: 'Today - 05/08/2023'  },
+  {  destination: 'Bosques', icon: 'location-outline',money: 'Today - 05/08/2023' }
 ];
 
 // Renderizar cada elemento de la lista como un botón
@@ -25,7 +25,7 @@ const renderHistoryItem = ({ item, index }) => (
   >
     <Text style={styles.historyText}>Destination: {item.destination}</Text>
 
-    <Text style={styles.historyCost}>cost: {item.money}$    
+    <Text style={styles.historyCost}>Date: {item.money}    
       <Ionicons name={item.icon} style={styles.historyIcon} />
     </Text>
   </Box>
