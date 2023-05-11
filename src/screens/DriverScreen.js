@@ -2,9 +2,7 @@ import React from 'react';
 import { VStack, Input, FormControl, Box, Avatar, HStack, Heading, Button, Image, Center, View } from "native-base";
 import styles from "../utils/styles";
 import Ganzo from '../../assets/Ganzo.png';
-import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import screen from '../utils/screenNames';
-import SelectCountry from '../components/SelectCountry';
 import { Ionicons } from '@expo/vector-icons';
 import { IconButton } from "native-base";
 import SelectTime from '../components/SelectTime';
@@ -13,6 +11,11 @@ import PassengerRatings from '../components/Stars';
 
 
 const DriverScreen = ({ navigation }) => {
+
+    function onPressIcon() {
+        navigation.navigate(screen.chat)
+      }
+
     return (
         <Center
             alignSelf={'center'}
@@ -35,7 +38,7 @@ const DriverScreen = ({ navigation }) => {
                         borderRadius={'full'}
                         backgroundColor={'transparent'}
                     >
-                        <Avatar flexDirection={'row'} flex={1} size={'4xl'}>
+                        <Avatar flexDirection={'row'} flex={1} width={'full'}>
                             <Image
                                 flex={1}
                                 source={Ganzo}
@@ -47,6 +50,7 @@ const DriverScreen = ({ navigation }) => {
                         </Avatar>
                     </Box>
                     <IconButton
+                        onPress={onPressIcon} 
                         borderRadius={'full'}
                         position="absolute"
                         bottom={0}
@@ -86,7 +90,6 @@ const DriverScreen = ({ navigation }) => {
                             <HStack flex={1} space={5}>
                                 <Box flex={1}>
                                     <FormControl.Label>Time to arrive:</FormControl.Label>
-                                    <SelectTime></SelectTime>
                                 </Box>
 
                                 <Box flex={1}>

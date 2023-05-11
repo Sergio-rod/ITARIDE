@@ -12,7 +12,8 @@ export default screen = {
     driver: 'Driver Screen',
     passenger: 'Passenger Screen',
     trip:'Trip Screen',
-    ride: 'Ride Screen'
+    ride: 'Ride Screen',
+    chat: 'Chat Screen'
 
 
 };
