@@ -2,6 +2,8 @@ import React from "react";
 import { Box, FlatList, Heading, Avatar, HStack, VStack, Text, Spacer, Center, NativeBaseProvider, View } from "native-base";
 import styles from "../utils/styles";
 
+
+
 const ChatsScreen = () => {
     const data = [{
         id: "bd7acbea-c1b1-46c2-aed5-3ad53abb28ba",

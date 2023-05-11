@@ -7,6 +7,7 @@ import { TouchableOpacity } from 'react-native';
 import screen from '../utils/screenNames';
 import { Pressable } from 'react-native';
 import { StyleSheet } from 'react-native';
+
 const RequestTripScreen = ({ navigation }) => {
 
   function onPressMapImage() {
