@@ -120,7 +120,9 @@ const styles = extendTheme({
     flexDirection: 'row',
     alignItems: 'center',
     color: '#024959',
-  },
+  }
+  
+ 
 
 });
 

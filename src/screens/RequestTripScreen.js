@@ -2,10 +2,11 @@ import React from 'react';
 import { VStack, Text, Box, Avatar, HStack, Heading, Button, Image, Center, View } from "native-base";
 import styles from "../utils/styles";
 import Ganzo from '../../assets/Ganzo.png';
+import DriverScreen from './DriverScreen';
 
 const RequestTripScreen = ({ navigation }) => {
   return (
-    <Text>Hola</Text>
+    <DriverScreen></DriverScreen>
 
       // <Center 
       // alignSelf={'center'} 
