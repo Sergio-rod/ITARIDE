@@ -4,8 +4,6 @@ import styles from "../utils/styles";
 import Ganzo from '../../assets/Ganzo.png';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import screen from '../utils/screenNames';
-import DriverStack from '../navigation/DriverStack';
-import PassengerStack from '../navigation/PassengerStack';
 
 
 const Stack = createNativeStackNavigator();

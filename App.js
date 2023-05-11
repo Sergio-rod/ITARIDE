@@ -8,16 +8,14 @@ import AppStack from './src/navigation/AppStack';
 import { SafeAreaView } from "react-native";
 //tests
 
-import PassengerScreen from "./src/screens/PassengerScreen";
-import DriverScreen from "./src/screens/DriverScreen";
-
+import RequestRideScreen
+ from "./src/screens/RequestRideScreen";
 export default function App() {
   return (
     <SafeAreaView style={{ flex: 1 }}>
     <NavigationContainer>
         <NativeBaseProvider>
-<DriverScreen></DriverScreen>
-          {/* <AppStack /> */}
+          <AppStack />
         </NativeBaseProvider>
     </NavigationContainer>
     </SafeAreaView>
