@@ -1,8 +1,9 @@
 import React, { useState } from 'react';
-import { View, TextInput, Image, StyleSheet } from 'react-native';
+import { View, TextInput, Image, StyleSheet, KeyboardAvoidingView } from 'react-native';
 import { Text } from 'native-base';
 import { AntDesign } from '@expo/vector-icons';
 import { TouchableOpacity } from 'react-native';
+import { Keyboard } from 'react-native';
 
 const ChatScreen = ({ name, avatar }) => {
   const [message, setMessage] = useState('');
@@ -13,7 +14,7 @@ const ChatScreen = ({ name, avatar }) => {
   };
 
   return (
-    <View style={styles.container}>
+    <KeyboardAvoidingView style={styles.container} behavior="height">
       <View style={styles.header}>
         <Image style={styles.avatar} source={{ uri: avatar }} />
         <View style={styles.nameContainer}>
@@ -31,12 +32,13 @@ const ChatScreen = ({ name, avatar }) => {
           onChangeText={setMessage}
           onSubmitEditing={handleSend}
           returnKeyType="send"
+          onFocus={() => Keyboard.dismiss()}
         />
         <TouchableOpacity style={styles.sendButton} onPress={handleSend}>
           <AntDesign name="arrowup" size={24} color="#fff" />
         </TouchableOpacity>
       </View>
-    </View>
+    </KeyboardAvoidingView>
   );
 };
 

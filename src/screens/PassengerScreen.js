@@ -20,11 +20,10 @@ const PassengerScreen = ({ navigation }) => {
     return (
         <Center
             alignSelf={'center'}
-            flex={1} width={'85%'}
+            flex={1} width={'100%'}
             height='100%'
-            borderWidth={1}
         >
-            <VStack flex={1} space={1} alignItems={'center'} borderWidth={1} >
+            <VStack flex={1} space={1} alignItems={'center'} >
 
                 <Box flex={2 / 10} alignItems={'center'} marginTop={4}>
                     <Heading style={styles.headings}>
@@ -34,7 +33,6 @@ const PassengerScreen = ({ navigation }) => {
                 <Box flex={8 / 10} overflow={'hidden'} minWidth={'70%'}>
                     <Box
                         flex={1}
-                        borderWidth={2}
                         borderColor={'black'}
                         borderRadius={'full'}
                         backgroundColor={'transparent'}
@@ -67,7 +65,7 @@ const PassengerScreen = ({ navigation }) => {
 
 
 
-                <Box flex={1} borderWidth={1} borderColor={'red'} borderRadius={10} p={5}>
+                <Box flex={1} borderColor={'red'} borderRadius={10} p={5}>
 
                     <VStack spacing={2}>
 
@@ -79,7 +77,7 @@ const PassengerScreen = ({ navigation }) => {
 
 
 
-                        <Box flex={1} marginTop={10}>
+                        <Box flex={1} >
 
                             <FormControl.Label>Name</FormControl.Label>
                             <Input defaultValue="Ganzo" isReadOnly={true} />
@@ -111,7 +109,7 @@ const PassengerScreen = ({ navigation }) => {
                             marginTop={10}
                         >
 
-                            <Button alignSelf={'center'} style={styles.buttonCian} mt={2}
+                            <Button alignSelf={'center'} style={styles.buttonCian} 
                                 onPress={() => {
                                     console.log("buton clicked", screen.authenticated);
 

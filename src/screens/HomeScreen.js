@@ -14,7 +14,6 @@ const HomeScreen = ({ navigation }) => {
       alignSelf={'center'} 
       flex={1} width={'85%'} 
       height='100%'
-      borderWidth={1}
     > 
       <VStack space={2}  alignItems={'center'}>
         <Box alignItems={'left'} marginBottom={'5'}>
@@ -24,7 +23,6 @@ const HomeScreen = ({ navigation }) => {
         </Box>
 
         <Box
-          borderWidth={1}
           borderColor={'red'}
           borderRadius={'full'}
           overflow={'hidden'}
@@ -39,18 +37,18 @@ const HomeScreen = ({ navigation }) => {
           </Avatar>
         </Box>
 
-        <Box flex={1} flexDirection={'row'} borderWidth={1} borderColor={'red'} borderRadius={10} p={5}>
+        <Box flex={1} flexDirection={'row'}  borderColor={'red'} borderRadius={10} p={5}>
           <VStack spacing={2}>
 
             <HStack justifyContent={'center'} mt={5}>
 
-              <Box borderWidth={1} borderColor={'red'} borderRadius={10} mr={2}>
+              <Box  borderColor={'red'} borderRadius={10} mr={2}>
                 <Button onPress={() => navigation.navigate(screen.ride)}>
                   Quiero un viaje
                 </Button>
               </Box>
 
-              <Box borderWidth={1} borderColor={'red'} borderRadius={10} ml={2}>
+              <Box borderColor={'red'} borderRadius={10} ml={2}>
                 <Button onPress={() => navigation.navigate(screen.trip)}>
                   Quiero un acompañante
                 </Button>

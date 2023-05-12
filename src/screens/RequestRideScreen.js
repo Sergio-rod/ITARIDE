@@ -18,7 +18,7 @@ const RequestRideScreen = ({ navigation }) => {
     <Center
       alignSelf={'center'}
       flex={1} width={'85%'}
-      borderWidth={1}
+      
     >
       <VStack space={1} flex={1} alignItems={'center'} width={'80%'}>
         <FormControl.Label>In range of</FormControl.Label>
@@ -36,7 +36,7 @@ const RequestRideScreen = ({ navigation }) => {
           </Box>
         </HStack>
 
-        <Box flex={2} borderWidth={1} width={'100%'}>
+        <Box flex={2} borderWidth={1}  width={'100%'}>
           <TouchableOpacity style={styles.button} onPress={onPressMapImage} flex={1} >
             <Image
               width={'100%'}
