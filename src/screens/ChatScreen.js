@@ -1,99 +1,35 @@
-import React, { useState } from 'react';
-import { View, TextInput, Image, StyleSheet, KeyboardAvoidingView } from 'react-native';
-import { Text } from 'native-base';
-import { AntDesign } from '@expo/vector-icons';
-import { TouchableOpacity } from 'react-native';
-import { Keyboard } from 'react-native';
+import React, { useState, useCallback, useEffect } from 'react'
+import { GiftedChat } from 'react-native-gifted-chat'
 
-const ChatScreen = ({ name, avatar }) => {
-  const [message, setMessage] = useState('');
+export default function ChatsScreen(){
+  const [messages, setMessages] = useState([]);
 
-  const handleSend = () => {
-    console.log(message);
-    setMessage('');
-  };
+  useEffect(() => {
+    setMessages([
+      {
+        _id: 1,
+        text: 'Hello developer',
+        createdAt: new Date(),
+        user: {
+          _id: 2,
+          name: 'React Native',
+          avatar: 'https://placeimg.com/140/140/any',
+        },
+      },
+    ])
+  }, [])
+
+  const onSend = useCallback((messages = []) => {
+    setMessages(previousMessages => GiftedChat.append(previousMessages, messages))
+  }, [])
 
   return (
-    <KeyboardAvoidingView style={styles.container} behavior="height">
-      <View style={styles.header}>
-        <Image style={styles.avatar} source={{ uri: avatar }} />
-        <View style={styles.nameContainer}>
-          <Text style={styles.name}>{name}</Text>
-        </View>
-      </View>
-      <View style={styles.chatContainer}>
-        {/* Here goes the chat messages */}
-      </View>
-      <View style={styles.inputContainer}>
-        <TextInput
-          style={styles.input}
-          placeholder="Type a message"
-          value={message}
-          onChangeText={setMessage}
-          onSubmitEditing={handleSend}
-          returnKeyType="send"
-          onFocus={() => Keyboard.dismiss()}
-        />
-        <TouchableOpacity style={styles.sendButton} onPress={handleSend}>
-          <AntDesign name="arrowup" size={24} color="#fff" />
-        </TouchableOpacity>
-      </View>
-    </KeyboardAvoidingView>
-  );
-};
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-  },
-  header: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    padding: 10,
-    borderBottomWidth: 1,
-    borderBottomColor: '#ccc',
-  },
-  avatar: {
-    width: 40,
-    height: 40,
-    borderRadius: 20,
-    marginRight: 10,
-  },
-  nameContainer: {
-    flex: 1,
-  },
-  name: {
-    fontSize: 18,
-    fontWeight: 'bold',
-  },
-  chatContainer: {
-    flex: 1,
-    padding: 10,
-  },
-  inputContainer: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    borderTopWidth: 1,
-    borderTopColor: '#ccc',
-    padding: 10,
-  },
-  input: {
-    flex: 1,
-    borderWidth: 1,
-    borderRadius: 20,
-    padding: 10,
-    marginRight: 10,
-  },
-  sendButton: {
-    backgroundColor: 'blue',
-    width: 50,
-    height: 50,
-    borderRadius: 25,
-    alignItems: 'center',
-    justifyContent: 'center',
-    marginLeft: 10,
-  },
-});
-
-export default ChatScreen;
+    <GiftedChat
+      messages={messages}
+      onSend={messages => onSend(messages)}
+      user={{
+        _id: 1,
+      }}
+    />
+  )
+}

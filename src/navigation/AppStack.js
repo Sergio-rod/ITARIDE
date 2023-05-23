@@ -10,9 +10,29 @@ import screen from '../utils/screenNames';
 import AuthenticatedScreen from '../screens/AuthenticatedScreen';
 import StartScreen from '../screens/StartScreen';
 import SignUpScreen from '../screens/SignUpScreen';
-
+import ChatScreen from '../screens/ChatScreen';
 
 const Stack = createNativeStackNavigator();
+
+
+function AlreadyLoged(){
+  return(
+    <Stack.Navigator>
+
+      <Stack.Screen name ={screen.chat} component={ChatScreen}></Stack.Screen>
+
+    </Stack.Navigator>
+  )
+}
+function NotLogged(){
+  return(
+    <Stack.Navigator>
+      
+    </Stack.Navigator>
+  )
+}
+
+
 
 const AppStack = () => {
   return (

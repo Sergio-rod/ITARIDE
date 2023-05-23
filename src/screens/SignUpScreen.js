@@ -14,9 +14,16 @@ import {
 } from "native-base";
 import styles from "../utils/styles";
 import SelectCountry from "../components/SelectCountry";
+import { signInWithEmailAndPassword, signInWithPhoneNumber } from "firebase/auth";
+import { getAuth, RecaptchaVerifier } from "firebase/auth";
+
+
+
+
 
 
 const SignUpScreen = ({ navigation }) => {
+
   return (
     <View  flex={1} style={styles.containerSign}>
 
