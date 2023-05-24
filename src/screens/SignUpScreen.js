@@ -17,7 +17,7 @@ import SelectCountry from "../components/SelectCountry";
 import { signInWithEmailAndPassword, signInWithPhoneNumber } from "firebase/auth";
 import { getAuth, RecaptchaVerifier } from "firebase/auth";
 
-
+import ModalAuth from "../components/ModalAuth";
 
 
 
@@ -105,9 +105,11 @@ const SignUpScreen = ({ navigation }) => {
           alignSelf={'center'}
             
           >
-            <Link mt={60} onPress={() => handleLinkPress()} colorScheme="cyan">
+
+            <ModalAuth></ModalAuth>
+            {/* <Link mt={60} onPress={() => handleLinkPress()} colorScheme="cyan">
               Already have account? find It
-            </Link>
+            </Link> */}
           </Box>
 
 
