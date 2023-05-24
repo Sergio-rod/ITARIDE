@@ -45,6 +45,12 @@ const styles = extendTheme({
     borderRadius: 5,
     textAlign: 'center'
   },
+  buttonModal: {
+    width: '95%',
+    backgroundColor: '#024959',
+    borderRadius: 5,
+    textAlign: 'center'
+  },
   container: {
     flex: 1,
     width: '100%',

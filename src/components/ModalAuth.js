@@ -1,7 +1,9 @@
 import React, { useState } from 'react';
 import { View, Modal, Button } from 'react-native';
 import OtpInput from 'otp-input-react';
-
+import styles from '../utils/styles';
+import { CgSpinner } from 'react-icons/cg';
+import { Text } from 'native-base';
 const ModalAuth = () => {
   const [modalVisible, setModalVisible] = useState(false);
   const [otp, setOtp] = useState('');
@@ -22,7 +24,7 @@ const ModalAuth = () => {
 
   return (
     <View>
-      <Button title="Abrir Modal" onPress={handleOpenModal} />
+      <Button title="Already have account?, find it" onPress={handleOpenModal} />
       <Modal
         animationType="slide"
         transparent={false}
@@ -33,21 +35,14 @@ const ModalAuth = () => {
           <OtpInput
             value={otp}
             onChange={handleOTPChange}
-            numInputs={4}
-            separator={<span>-</span>}
-            inputStyle={{
-              width: 50,
-              height: 50,
-              marginHorizontal: 5,
-              fontSize: 20,
-              borderRadius: 5,
-              borderWidth: 1,
-              borderColor: 'gray',
-              textAlign: 'center',
-            }}
+            OTPLength={6}
             isInputNum
             shouldAutoFocus
           />
+
+          <Button title='Verify' />
+          
+          
           <Button title="Cerrar Modal" onPress={handleCloseModal} />
         </View>
       </Modal>
