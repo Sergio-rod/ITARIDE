@@ -1,9 +1,8 @@
 import React, { useState } from 'react';
 import { View, Modal, Button } from 'react-native';
-import OtpInput from 'otp-input-react';
-import styles from '../utils/styles';
-import { CgSpinner } from 'react-icons/cg';
-import { Text } from 'native-base';
+import { StyleSheet } from 'react-native';
+// import OtpInput from 'react-otp-input';
+import OTPInputView from '@twotalltotems/react-native-otp-input';
 const ModalAuth = () => {
   const [modalVisible, setModalVisible] = useState(false);
   const [otp, setOtp] = useState('');
@@ -31,13 +30,14 @@ const ModalAuth = () => {
         visible={modalVisible}
         onRequestClose={handleCloseModal}
       >
-        <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-          <OtpInput
-            value={otp}
-            onChange={handleOTPChange}
-            OTPLength={6}
-            isInputNum
-            shouldAutoFocus
+        <View style={{justifyContent: 'center', alignItems: 'center', alignContent:'center' }}>
+          <OTPInputView
+          style={{width: '80%', height: 200, alignSelf:'center'}}
+           pinCount={6}
+           autoFocusOnLoad
+           codeInputFieldStyle={styles.underlineStyleBase}
+           codeInputHighlightStyle={styles.underlineStyleHighLighted}
+           onCodeFilled={handleOTPChange}
           />
 
           <Button title='Verify' />
@@ -51,3 +51,27 @@ const ModalAuth = () => {
 };
 
 export default ModalAuth;
+
+
+
+const styles = StyleSheet.create({
+  borderStyleBase: {
+    width: 30,
+    height: 45
+  },
+
+  borderStyleHighLighted: {
+    borderColor: "#03DAC6",
+  },
+
+  underlineStyleBase: {
+    width: 30,
+    height: 45,
+    borderWidth: 0,
+    borderBottomWidth: 1,
+  },
+
+  underlineStyleHighLighted: {
+    borderColor: "#03DAC6",
+  },
+});
