@@ -3,6 +3,8 @@ import { View, Modal, Button } from 'react-native';
 import { StyleSheet } from 'react-native';
 // import OtpInput from 'react-otp-input';
 import OTPInputView from '@twotalltotems/react-native-otp-input';
+import { Text } from 'react-native-elements';
+import { Box } from 'native-base';
 const ModalAuth = () => {
   const [modalVisible, setModalVisible] = useState(false);
   const [otp, setOtp] = useState('');
@@ -21,8 +23,11 @@ const ModalAuth = () => {
     // Aquí puedes realizar cualquier lógica adicional con el OTP ingresado
   };
 
+
+
+
   return (
-    <View>
+    <View style={styles.containerModal}>
       <Button title="Already have account?, find it" onPress={handleOpenModal} />
       <Modal
         animationType="slide"
@@ -31,6 +36,8 @@ const ModalAuth = () => {
         onRequestClose={handleCloseModal}
       >
         <View style={{justifyContent: 'center', alignItems: 'center', alignContent:'center' }}>
+          <Box mt={200} alignContent={'center'} alignItems={'center'} justifyContent={'center'} justifyItems={'center'}>
+          <Text>Verify you´r phone number</Text>
           <OTPInputView
           style={{width: '80%', height: 200, alignSelf:'center'}}
            pinCount={6}
@@ -44,6 +51,7 @@ const ModalAuth = () => {
           
           
           <Button title="Cerrar Modal" onPress={handleCloseModal} />
+          </Box>
         </View>
       </Modal>
     </View>
@@ -74,4 +82,11 @@ const styles = StyleSheet.create({
   underlineStyleHighLighted: {
     borderColor: "#03DAC6",
   },
+
+  containerModal:{
+    flex: 1,
+    alignContent: 'center',
+    alignItems:'center',
+    
+  }
 });
