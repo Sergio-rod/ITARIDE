@@ -2,6 +2,7 @@ export default screen = {
     main: 'Main Screen',
     start: 'Start Screen',
     signUp: 'SignUp Screen',
+    login: 'Login Screen',
     home: 'Home Screen',
     homeStack:'Home Stack',
     settings: 'Settings Screen',

@@ -106,10 +106,17 @@ const SignUpScreen = ({ navigation }) => {
             
           >
 
-            <ModalAuth></ModalAuth>
-            {/* <Link mt={60} onPress={() => handleLinkPress()} colorScheme="cyan">
+            {/* <ModalAuth></ModalAuth> */}
+
+            <Link mt={60}onPress={() =>{
+              console.log("buton clicked",screen.login);
+
+              navigation.navigate(screen.login)}} colorScheme="cyan">
               Already have account? find It
-            </Link> */}
+            </Link>
+
+
+
           </Box>
 
 
