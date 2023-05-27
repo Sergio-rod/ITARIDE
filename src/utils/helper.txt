@@ -1,53 +1,102 @@
+return (
+    <View  flex={1} style={styles.containerSign}>
 
+      <Center alignSelf={'center'} width={'85%'} height='100%' >
 
-        <Box alignItems={'left'} marginBottom={'5'}>
-          <Heading style={styles.headings}>
-            Hola, Ganzo
+        <VStack style={styles.verticalStack}>
+
+          <Box paddingBottom={5} flex={1} alignItems={'center'} marginBottom={'5'} justifyContent={'center'}>
+            <Heading style={styles.headings}>
+              Sign Up
+            </Heading>
+          </Box>
+
+          <Heading style={styles.smallHeading} >
+            Please, fill the fields:
           </Heading>
-        </Box>
+
+
+          <HStack flex={2} space={2}>
+
+            <Box flex={1}>
+              
+            <FormControl.Label>Code</FormControl.Label>
+
+              <SelectCountry />
+            </Box>
+
+            <Box flex={3}>
+              <FormControl>
+              <FormControl.Label>Phone Number</FormControl.Label>
+                <Input />
+              </FormControl>
+            </Box>
+          </HStack>
+
+          <HStack flex={2} space={2}>
+            <Box flex={1}>
+              <FormControl.Label>CAMPUS</FormControl.Label>
+              <SelectCountry />
+            </Box>
+
+            <Box flex={3}>
+              <FormControl>
+                <FormControl.Label>Control number</FormControl.Label>
+                <Input type="text" />
+              </FormControl>
+
+            </Box>
+
+          </HStack>
+
+          <Box flex={2}>
+          <FormControl flex={1}>
+            <FormControl.Label>Institute Mail</FormControl.Label>
+            <Input width={'100%'} type="text" />
+          </FormControl>
+
+
+          </Box>
+
+          
 
           <Box
-            flex={1}
-            borderWidth={1}
-            borderColor={'red'}
-            borderRadius={'full'}
-            overflow={'hidden'} // Agregar esta propiedad para recortar el contenido
+          flex={2}
+            width="100%"
+            alignItems="center"
           >
-            <Avatar size={'2xl'}>
-              <Image
-                source={Ganzo}
-                alt={'Avatar'}
-                resizeMode={'cover'}
-                style={{ width: '100%', height: '100%' }} // Ajustar el ancho y alto de la imagen
 
-              />
-            </Avatar>
+            <Button  alignSelf={'center'} style={styles.buttonCian} mt={2}
+              onPress={() =>{
+              console.log("buton clicked",screen.authenticated);
+
+              navigation.navigate(screen.authenticated);}}>Sign Up </Button>
+
           </Box>
 
-          <Box flex={1} borderWidth={1} borderColor={'red'} borderRadius={10} p={5}>
-            <VStack spacing={2}>
-              <Text>
-                A little of me:
-              </Text>
-              <Text>
-                Total travels:
-              </Text>
 
-              <HStack justifyContent={'center'} mt={5}>
+          <Box flex={2}
+          alignSelf={'center'}
+            
+          >
 
-                <Box borderWidth={1} borderColor={'red'} borderRadius={10} mr={2}>
-                  <Button>
-                    Botón 1
-                  </Button>
-                </Box>
+            {/* <ModalAuth></ModalAuth> */}
 
-                <Box borderWidth={1} borderColor={'red'} borderRadius={10} ml={2}>
-                  <Button>
-                    Botón 2
-                  </Button>
-                </Box>
+            <Link mt={60}onPress={() =>{
+              console.log("buton clicked",screen.login);
 
-              </HStack>
+              navigation.navigate(screen.login)}} colorScheme="cyan">
+              Already have account? find It
+            </Link>
 
-            </VStack>
+
+
           </Box>
+
+
+
+        </VStack>
+      </Center>
+      </View>
+   
+  )

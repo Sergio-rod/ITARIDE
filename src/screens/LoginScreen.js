@@ -78,7 +78,7 @@ const LoginScreen = ({ navigation }) => {
         navigation.navigate(screen.authenticated)
 
 
-        console.log('You complete the form!', errors)
+        console.log('You complete the form!')
 
 
     //   validate() ? console.log('Submitted', formData) :
@@ -186,7 +186,7 @@ const LoginScreen = ({ navigation }) => {
             <Button
               colorScheme="primary" variant="link" size="xs"
               >
-              You don´t have anny account? Press here
+              Did you forget the password? Press here
             </Button>
 
           

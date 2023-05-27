@@ -1,131 +1,236 @@
 import * as React from "react";
 import {
   Box,
-  Heading,
   VStack,
   FormControl,
   Input,
   Button,
-  Center,
-  NativeBaseProvider,
-  HStack,
-  Link,
-  View
+  ScrollView,
+  Text,
+  Pressable,
+  Icon,
+  HStack
 } from "native-base";
 import styles from "../utils/styles";
+import screen from "../utils/screenNames";
 import SelectCountry from "../components/SelectCountry";
-import { signInWithEmailAndPassword, signInWithPhoneNumber } from "firebase/auth";
-import { getAuth, RecaptchaVerifier } from "firebase/auth";
-
-import ModalAuth from "../components/ModalAuth";
+import SelectTECNM from "../components/SelectTECNM";
 
 
 
 
-const SignUpScreen = ({ navigation }) => {
+const LoginScreen = ({ navigation }) => {
+    const [formData, setFormData] = React.useState({});
+    const [errors, setErrors] = React.useState({});
+    // view password
+    const[show, setShow] = React.useState(false);
 
-  return (
-    <View  flex={1} style={styles.containerSign}>
+    var pattern = new RegExp(
+      "^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[-+_!@#$%^&*.,?]).+$"
+  
+    )
+  
+    const validate = () => {
+      if (formData.name === undefined) {
+        setErrors({
+          ...errors,
+          name: 'Name is required'
+        });
+        return false;
+      } else if (formData.name.length < 3) {
+        setErrors({
+          ...errors,
+          name: 'Name is too short'
+        });
+        return false;
+      } else if (!formData.pass) {
+        console.log('passs 1 if ', formData.pass)
+        setErrors({
+          ...errors,
+          pass: 'Password is required'
+        });
+        return false;
+      } else if (formData.pass.length < 8) {
+        setErrors({
+          ...errors,
+          pass: 'Pass is too short'
+        });
+        return false;
+      }
+      else if (!pattern.test(formData.pass)) {
+        //formData.pass.search('[A-Z]')
+        console.log('pass', formData.pass)
+        setErrors({
+          ...errors,
+          pass: 'Must contain a special character'
+        });
+        return false
+      }
+  
+      setErrors({})
+      return true;
+    };
+  
+    const onSubmit = async () => {
 
-      <Center alignSelf={'center'} width={'85%'} height='100%' >
 
-        <VStack style={styles.verticalStack}>
+        navigation.navigate(screen.authenticated)
 
-          <Box paddingBottom={5} flex={1} alignItems={'center'} marginBottom={'5'} justifyContent={'center'}>
-            <Heading style={styles.headings}>
-              Sign Up
-            </Heading>
+
+        console.log('You complete the form!')
+
+  
+    };
+  
+  
+    return (
+      <ScrollView>
+        <VStack space={3} alignSelf="center" px="4" safeArea mt="5"
+          w={{ base: "100%", md: "50%" }}>
+  
+  
+          <Box marginBottom={10} flex={1} alignSelf={"center"}>
+            <Text bold fontSize={'3xl'} >Sign up</Text>
           </Box>
 
-          <Heading style={styles.smallHeading} >
-            Please, fill the fields:
-          </Heading>
+
+          <Box marginBottom={10} flex={1} alignSelf={"left"}>
+            <Text bold fontSize={'md'} >Please fill the fields</Text>
+          </Box>
+  
+  
 
 
-          <HStack flex={2} space={2}>
+          <Box>
 
-            <Box flex={1}>
-              
-            <FormControl.Label>Code</FormControl.Label>
+            <HStack space={2} >
 
+
+
+
+            <FormControl flex={1} isRequired isInvalid={'name' in errors}>
+              <FormControl.Label>Code</FormControl.Label>
               <SelectCountry />
-            </Box>
+  
+  
+  
+            </FormControl>
 
-            <Box flex={3}>
-              <FormControl>
-              <FormControl.Label>Phone Number</FormControl.Label>
-                <Input />
-              </FormControl>
-            </Box>
-          </HStack>
-
-          <HStack flex={2} space={2}>
-            <Box flex={1}>
-              <FormControl.Label>CAMPUS</FormControl.Label>
-              <SelectCountry />
-            </Box>
-
-            <Box flex={3}>
-              <FormControl>
-                <FormControl.Label>Control number</FormControl.Label>
-                <Input type="text" />
-              </FormControl>
-
-            </Box>
-
-          </HStack>
-
-          <Box flex={2}>
-          <FormControl flex={1}>
-            <FormControl.Label>Institute Mail</FormControl.Label>
-            <Input width={'100%'} type="text" />
-          </FormControl>
+            <FormControl flex={3} isRequired isInvalid={'name' in errors}>
+              <FormControl.Label>Phone number</FormControl.Label>
+              <Input  placeholder="Phone number"
+                onChangeText={value => setFormData({
+                  ...formData,
+                  name: value
+                })} />
+  
+            </FormControl>
 
 
+
+
+
+
+            </HStack>
+
+
+
+  
+  
           </Box>
 
+
+          <Box>
+
+            <HStack space={2} >
+
+
+
+
+            <FormControl flex={1} isRequired isInvalid={'name' in errors}>
+              <FormControl.Label>Campus</FormControl.Label>
+              <SelectTECNM />
+  
+  
+  
+            </FormControl>
+
+            <FormControl flex={3} isRequired isInvalid={'name' in errors}>
+              <FormControl.Label>Control number</FormControl.Label>
+              <Input  placeholder="Control number"
+                onChangeText={value => setFormData({
+                  ...formData,
+                  name: value
+                })} />
+  
+            </FormControl>
+
+
+
+
+
+
+            </HStack>
+
+
+
+  
+  
+          </Box>
           
 
-          <Box
-          flex={2}
-            width="100%"
-            alignItems="center"
-          >
 
-            <Button  alignSelf={'center'} style={styles.buttonCian} mt={2}
-              onPress={() =>{
-              console.log("buton clicked",screen.authenticated);
+          <Box>
+            <FormControl isRequired isInvalid = {'pass' in errors}>
+              <FormControl.Label>Password</FormControl.Label>
+              <Input type={show ? "text" : "password" } 
+              InputRightElement={<Pressable onPress={() => setShow(!show)}>
+              <Icon as={<Icon name={show ? "visibility" : "visibility-off"} />} size={5} mr="2" color="muted.400" />
+            </Pressable>}
+              p={2} placeholder="Password"
+              onChangeText={value => setFormData({
+                ...formData,
+                pass: value
+              })} />
+              {'pass' in errors ?
+                <FormControl.ErrorMessage>{errors.pass}</FormControl.ErrorMessage>:
+              <FormControl.HelperText>
+                We'll keep this between us.
+              </FormControl.HelperText>}
+  
+            </FormControl>
+  
+  
+          </Box>
 
-              navigation.navigate(screen.authenticated);}}>Sign Up </Button>
+          <Box>
+            <Button
+              colorScheme="primary" variant="link" size="xs"
+              onPress={() => navigation.navigate(screen.login)}>
+              Already have account? Press here
+            </Button>
 
+          
+  
+  
           </Box>
 
 
-          <Box flex={2}
-          alignSelf={'center'}
-            
-          >
 
-            {/* <ModalAuth></ModalAuth> */}
+          <Box alignItems={'center'}>
+            <Button style={styles.buttonCian}
+              onPress={onSubmit}>
+              Submit
+            </Button>
+          
 
-            <Link mt={60}onPress={() =>{
-              console.log("buton clicked",screen.login);
-
-              navigation.navigate(screen.login)}} colorScheme="cyan">
-              Already have account? find It
-            </Link>
-
-
-
+          
+  
+  
           </Box>
-
-
-
         </VStack>
-      </Center>
-      </View>
-   
-  )
+      </ScrollView>
+    )
 }
 
-export default SignUpScreen
+export default LoginScreen
