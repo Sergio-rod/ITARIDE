@@ -9,7 +9,9 @@ import {
   Text,
   Pressable,
   Icon,
-  HStack
+  HStack,
+  FlatList,
+  Stack
 } from "native-base";
 import styles from "../utils/styles";
 import screen from "../utils/screenNames";
@@ -19,11 +21,34 @@ import SelectTECNM from "../components/SelectTECNM";
 
 
 
-const LoginScreen = ({ navigation }) => {
+const SignUpScreen = ({ navigation }) => {
+
+
+  //STATES
+  
     const [formData, setFormData] = React.useState({});
     const [errors, setErrors] = React.useState({});
     // view password
     const[show, setShow] = React.useState(false);
+
+    const [selectedCountry, setSelectedCountry] = React.useState("");
+    const [selectedTECNM, setSelectedTECNM] = React.useState("");
+
+
+
+
+    //selects
+    const handleCountryValueChange = (value) => {
+      setSelectedCountry(value); // Actualizar el valor seleccionado
+      setFormData({ ...formData, country: value }); // Agregar el valor al estado formData
+    };
+  
+    const handleTECNMValueChange = (value) => {
+      setSelectedTECNM(value); // Actualizar el valor seleccionado
+      setFormData({ ...formData, TECNM: value }); // Agregar el valor al estado formData
+    };
+  
+
 
     var pattern = new RegExp(
       "^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[-+_!@#$%^&*.,?]).+$"
@@ -85,7 +110,8 @@ const LoginScreen = ({ navigation }) => {
   
     return (
       <ScrollView>
-        <VStack space={3} alignSelf="center" px="4" safeArea mt="5"
+        
+        <Stack space={3} alignSelf="center" px="4" safeArea mt="5"
           w={{ base: "100%", md: "50%" }}>
   
   
@@ -110,7 +136,7 @@ const LoginScreen = ({ navigation }) => {
 
             <FormControl flex={1} isRequired isInvalid={'name' in errors}>
               <FormControl.Label>Code</FormControl.Label>
-              <SelectCountry />
+              <SelectCountry onValueChange={handleCountryValueChange} />
   
   
   
@@ -121,7 +147,7 @@ const LoginScreen = ({ navigation }) => {
               <Input  placeholder="Phone number"
                 onChangeText={value => setFormData({
                   ...formData,
-                  name: value
+                  phoneNumber: value
                 })} />
   
             </FormControl>
@@ -149,7 +175,7 @@ const LoginScreen = ({ navigation }) => {
 
             <FormControl flex={1} isRequired isInvalid={'name' in errors}>
               <FormControl.Label>Campus</FormControl.Label>
-              <SelectTECNM />
+              <SelectTECNM onValueChange={handleTECNMValueChange} />
   
   
   
@@ -160,7 +186,7 @@ const LoginScreen = ({ navigation }) => {
               <Input  placeholder="Control number"
                 onChangeText={value => setFormData({
                   ...formData,
-                  name: value
+                  controlNumber: value
                 })} />
   
             </FormControl>
@@ -228,9 +254,9 @@ const LoginScreen = ({ navigation }) => {
   
   
           </Box>
-        </VStack>
+        </Stack>
       </ScrollView>
     )
 }
 
-export default LoginScreen
+export default SignUpScreen

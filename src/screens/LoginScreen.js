@@ -8,7 +8,8 @@ import {
   ScrollView,
   Text,
   Pressable,
-  Icon
+  Icon,
+  Stack
 } from "native-base";
 import styles from "../utils/styles";
 import { signInWithEmailAndPassword, signInWithPhoneNumber } from "firebase/auth";
@@ -74,52 +75,22 @@ const LoginScreen = ({ navigation }) => {
   
     const onSubmit = async () => {
 
-
-        navigation.navigate(screen.authenticated)
-
-
-        console.log('You complete the form!')
+        const isAuth = true;
 
 
-    //   validate() ? console.log('Submitted', formData) :
-    //     console.log('Validation Failed', errors)
-    //     console.log('FormData', formData)
-    //     console.log('Pass', formData.pass)
-    //     console.log('Type', typeof(formData))
-    //     setFormData({ ...formData, action: 'login'})
-    //     console.log('FormData', formData)
-    //     const formDataforRequest = new FormData()
-    //     console.log('Type', typeof(formDataforRequest))
-    //     formDataforRequest.append('nickname',formData.name)
-    //     formDataforRequest.append('password',formData.pass)
-    //     formDataforRequest.append('action',formData.action)
-  
-    //     const response= await axios.post(
-    //        'http://localhost:80/Api/index.php',
-    //       //'http://192.168.50.95/Api/index.php',
-    //       //'http://10.10.54.42/Api/index.php',
-    //       formDataforRequest,
-    //       {headers: {'Content-Type':'multipart/form-data',
-    //     "Access-Control-Allow-Origin":"*"},
-    //   transformRequest: formData => formDataforRequest,}
-    //     )
-    //     console.log('typeof',typeof(response.data))
-    //     console.log('Object.keys',Object.keys(response.data).length)
-    //     console.log('Object', response.data)
 
+        //try authenticator
 
-    //     if(Object.keys(response.data).length>=1)
-    //     {
-    //         console.log('email', response.data[0].email)
-    //         navigation.navigate('Cafe',{email: response.data[0].email});
-    //         // navigation.navigate('Cafe',{name: response.data});
-    //         //navigation
-    //         console.log('navigation','ok');
-    //     }
-    //     else
-    //     {
-    //         console.log('retry');
-    //     }
+        if (isAuth) {
+            console.log('You are authenticated')
+            navigation.navigate(screen.authenticated);
+        } else if (!isAuth) {
+            console.log('You must be authenticated')
+
+        }
+
+        //end authenticator
+
   
   
     };
@@ -127,7 +98,7 @@ const LoginScreen = ({ navigation }) => {
   
     return (
       <ScrollView>
-        <VStack space={3} alignSelf="center" px="4" safeArea mt="5"
+        <Stack space={3} alignSelf="center" px="4" safeArea mt="5"
           w={{ base: "100%", md: "50%" }}>
   
   
@@ -136,6 +107,10 @@ const LoginScreen = ({ navigation }) => {
               bold fontSize={'3xl'} alignContent={"center"} size={20}>Login
             </Text>
           </Box>
+
+
+
+          
   
   
           <Box>
@@ -207,7 +182,7 @@ const LoginScreen = ({ navigation }) => {
   
   
           </Box>
-        </VStack>
+        </Stack>
       </ScrollView>
     )
 }

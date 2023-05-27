@@ -14,7 +14,8 @@ export default screen = {
     passenger: 'Passenger Screen',
     trip:'Trip Screen',
     ride: 'Ride Screen',
-    chat: 'Chat Screen'
+    chat: 'Chat Screen',
+    switchScreens: 'Switch Login and Signup'
 
 
 };

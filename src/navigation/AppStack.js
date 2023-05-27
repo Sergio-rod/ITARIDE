@@ -12,26 +12,10 @@ import StartScreen from '../screens/StartScreen';
 import SignUpScreen from '../screens/SignUpScreen';
 import ChatScreen from '../screens/ChatScreen';
 import LoginScreen from '../screens/LoginScreen';
+import SwitchLoginSignin from '../components/SwitchLoginSignin';
 
 const Stack = createNativeStackNavigator();
 
-
-function AlreadyLoged(){
-  return(
-    <Stack.Navigator>
-
-      <Stack.Screen name ={screen.chat} component={ChatScreen}></Stack.Screen>
-
-    </Stack.Navigator>
-  )
-}
-function NotLogged(){
-  return(
-    <Stack.Navigator>
-      
-    </Stack.Navigator>
-  )
-}
 
 
 
@@ -61,6 +45,11 @@ const AppStack = () => {
          <Stack.Screen
         name={screen.authenticated}
         component={AuthenticatedScreen}   
+
+      />
+           <Stack.Screen
+        name={screen.switchScreens}
+        component={SwitchLoginSignin}   
 
       />
 

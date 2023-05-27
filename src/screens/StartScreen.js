@@ -2,6 +2,7 @@ import React from 'react';
 import { Image, Box, VStack, Button,View,Center} from 'native-base';
 import Logo from '../../assets/Logo.png';
 import styles from '../utils/styles';
+import screen from '../utils/screenNames';
 
 const StartScreen = ({ navigation }) => {
   return (
