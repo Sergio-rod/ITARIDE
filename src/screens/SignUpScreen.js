@@ -25,7 +25,7 @@ const SignUpScreen = ({ navigation }) => {
 
 
   //STATES
-  
+
     const [formData, setFormData] = React.useState({});
     const [errors, setErrors] = React.useState({});
     // view password
@@ -98,6 +98,8 @@ const SignUpScreen = ({ navigation }) => {
   
     const onSubmit = async () => {
 
+      console.log('Form Data', formData);
+
 
         navigation.navigate(screen.authenticated)
 
@@ -129,12 +131,12 @@ const SignUpScreen = ({ navigation }) => {
 
           <Box>
 
-            <HStack space={2} >
+            <HStack space={2} >{/*codigo y telefono*/}
 
 
 
 
-            <FormControl flex={1} isRequired isInvalid={'name' in errors}>
+            <FormControl flex={1} isRequired isInvalid={'code' in errors}>
               <FormControl.Label>Code</FormControl.Label>
               <SelectCountry onValueChange={handleCountryValueChange} />
   
@@ -142,7 +144,7 @@ const SignUpScreen = ({ navigation }) => {
   
             </FormControl>
 
-            <FormControl flex={3} isRequired isInvalid={'name' in errors}>
+            <FormControl flex={3} isRequired isInvalid={'phoneNumber' in errors}>
               <FormControl.Label>Phone number</FormControl.Label>
               <Input  placeholder="Phone number"
                 onChangeText={value => setFormData({
@@ -168,12 +170,12 @@ const SignUpScreen = ({ navigation }) => {
 
           <Box>
 
-            <HStack space={2} >
+            <HStack space={2} >{/*campus y numero de control*/}
 
 
 
 
-            <FormControl flex={1} isRequired isInvalid={'name' in errors}>
+            <FormControl flex={1} isRequired isInvalid={'campus' in errors}>
               <FormControl.Label>Campus</FormControl.Label>
               <SelectTECNM onValueChange={handleTECNMValueChange} />
   
@@ -181,7 +183,7 @@ const SignUpScreen = ({ navigation }) => {
   
             </FormControl>
 
-            <FormControl flex={3} isRequired isInvalid={'name' in errors}>
+            <FormControl flex={3} isRequired isInvalid={'controlNumber' in errors}>
               <FormControl.Label>Control number</FormControl.Label>
               <Input  placeholder="Control number"
                 onChangeText={value => setFormData({
@@ -206,7 +208,7 @@ const SignUpScreen = ({ navigation }) => {
           
 
 
-          <Box>
+          <Box>{/*contraseña*/}
             <FormControl isRequired isInvalid = {'pass' in errors}>
               <FormControl.Label>Password</FormControl.Label>
               <Input type={show ? "text" : "password" } 
