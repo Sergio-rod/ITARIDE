@@ -17,7 +17,7 @@ import SelectCountry from "../components/SelectCountry";
 import SelectTECNM from "../components/SelectTECNM";
 import validationSignUp from "../utils/validations/validationSignUp";
 import { signUp } from "../utils/actions/authActions";
-
+import { Alert } from "react-native";
 
 
 const SignUpScreen = ({ navigation }) => {
@@ -53,10 +53,21 @@ const SignUpScreen = ({ navigation }) => {
   };
 
 
-  const authHandler = () => {
-    signUp(formData)
+  const authHandler = async () => {
+    try {
+      await signUp(formData);
+      // navigation.navigate(screen.authenticated);
 
-  }
+      console.log("You completed the form!");
+    } catch (error) {
+      if (error.message === "This mail is already in use") {
+        Alert.alert("Error", error.message);
+      } else {
+        Alert.alert("Error", error.message);
+      }
+    }
+  };
+  
 
 
   const onSubmit = async () => {
