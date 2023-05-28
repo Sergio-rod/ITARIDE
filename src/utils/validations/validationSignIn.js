@@ -2,9 +2,13 @@ import validate from "validate.js";
 
 const validationSignIn = (formData) => {
   const validationRules = {
-    controlNumber: {
-      presence: { message: "Control number is required" },
-    },
+    mail: {
+        presence: { message: "Email is required" },
+        format: {
+          pattern: /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
+          message: "Email is not valid",
+        },
+      },
     pass: {
       presence: { message: "Password is required" },
       length: {

@@ -49,6 +49,12 @@ const SignUpScreen = ({ navigation }) => {
     return true;
   };
 
+
+  const authHandler = () => {
+    
+  }
+
+
   const onSubmit = async () => {
     if (validate()) {
       console.log('Form Data', formData);
@@ -107,6 +113,18 @@ const SignUpScreen = ({ navigation }) => {
       </Box>
 
 
+      <Box>
+        {/* Email */}
+        <FormControl isRequired isInvalid={'mail' in errors}>
+          <FormControl.Label>E-mail</FormControl.Label>
+          <Input
+            type='text'
+            p={2}
+            placeholder="mail"
+            onChangeText={value => setFormData({ ...formData, mail: value })}
+          />
+        </FormControl>
+      </Box>
 
 
 

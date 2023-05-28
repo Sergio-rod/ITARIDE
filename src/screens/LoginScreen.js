@@ -74,20 +74,13 @@ const LoginScreen = ({ navigation }) => {
       </Box>
 
       <Box>
-        <FormControl isRequired isInvalid={'controlNumber' in errors}>
-          <FormControl.Label>Control Number</FormControl.Label>
+        <FormControl isRequired isInvalid={'mail' in errors}>
+          <FormControl.Label>Mail</FormControl.Label>
           <Input
             p={3}
-            placeholder="Nick Name"
-            onChangeText={value => setFormData({ ...formData, controlNumber: value })}
+            placeholder="example@gmail.com"
+            onChangeText={value => setFormData({ ...formData, mail: value })}
           />
-          {'name' in errors ? (
-            <FormControl.ErrorMessage>{errors.controlNumber}</FormControl.ErrorMessage>
-          ) : (
-            <FormControl.HelperText>
-              Control number should contain at least 3 characters.
-            </FormControl.HelperText>
-          )}
         </FormControl>
       </Box>
 
