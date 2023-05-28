@@ -11,8 +11,6 @@ import { LogBox, SafeAreaView } from "react-native";
 
 LogBox.ignoreLogs(['AsyncStorage has been extracted'])
 
-import RequestRideScreen
- from "./src/screens/RequestRideScreen";
 export default function App() {
   return (
     <SafeAreaView style={{ flex: 1 }}>
