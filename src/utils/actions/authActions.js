@@ -13,6 +13,13 @@ export const signUp = async (formData) => {
         const result = await createUserWithEmailAndPassword(auth, formData.mail, formData.pass);
         console.log(result);
     } catch (error) {
-        console.log("no se puede we");
+        const errorCode = error.code;
+        let message = "Something went wrong";
+
+        if(errorCode === "auth/email-already-in-use"){
+            message = "This mail is already in use";
+        }
+
+        throw new Error(message);
     }
 };

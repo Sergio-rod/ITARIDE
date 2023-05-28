@@ -1,4 +1,4 @@
-import * as React from "react";
+import React, { useState } from "react";
 import {
   Box,
   VStack,
@@ -22,12 +22,12 @@ import { signUp } from "../utils/actions/authActions";
 
 const SignUpScreen = ({ navigation }) => {
   //STATES
-  const [formData, setFormData] = React.useState({});
-  const [errors, setErrors] = React.useState({});
+  const [formData, setFormData] = useState({});
+  const [errors, setErrors] = useState({});
   // view password
-  const [show, setShow] = React.useState(false);
-  const [selectedCountry, setSelectedCountry] = React.useState("");
-  const [selectedTECNM, setSelectedTECNM] = React.useState("");
+  const [show, setShow] = useState(false);
+  const [selectedCountry, setSelectedCountry] = useState("");
+  const [selectedTECNM, setSelectedTECNM] = useState("");
 
   //selects
   const handleCountryValueChange = (value) => {

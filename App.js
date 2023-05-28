@@ -5,8 +5,11 @@ import { NavigationContainer } from '@react-navigation/native';
 
 // Stacks
 import AppStack from './src/navigation/AppStack';
-import { SafeAreaView } from "react-native";
+import { LogBox, SafeAreaView } from "react-native";
 //tests
+
+
+LogBox.ignoreLogs(['AsyncStorage has been extracted'])
 
 import RequestRideScreen
  from "./src/screens/RequestRideScreen";
