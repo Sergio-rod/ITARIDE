@@ -1,3 +1,3 @@
-export const signUp = (numberCode,phoneNumer,campus,controlNumber,instituteMail,password)=>{
-    console.log(numberCode,phoneNumer,campus,controlNumber,instituteMail,password)
+export const signUp = (formData)=>{
+    console.log("from auth",formData)
 }

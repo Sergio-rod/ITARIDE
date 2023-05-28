@@ -16,6 +16,7 @@ import screen from "../utils/screenNames";
 import SelectCountry from "../components/SelectCountry";
 import SelectTECNM from "../components/SelectTECNM";
 import validationSignUp from "../utils/validations/validationSignUp";
+import { signUp } from "../utils/actions/authActions";
 
 const SignUpScreen = ({ navigation }) => {
   //STATES
@@ -51,13 +52,14 @@ const SignUpScreen = ({ navigation }) => {
 
 
   const authHandler = () => {
-    
+    signUp(formData)
+
   }
 
 
   const onSubmit = async () => {
     if (validate()) {
-      console.log('Form Data', formData);
+      authHandler();
       navigation.navigate(screen.authenticated);
       console.log('You completed the form!');
     }else{console.log('u must complete all')}
