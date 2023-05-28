@@ -18,6 +18,8 @@ import SelectTECNM from "../components/SelectTECNM";
 import validationSignUp from "../utils/validations/validationSignUp";
 import { signUp } from "../utils/actions/authActions";
 
+
+
 const SignUpScreen = ({ navigation }) => {
   //STATES
   const [formData, setFormData] = React.useState({});
