@@ -15,7 +15,7 @@ import styles from "../utils/styles";
 import screen from "../utils/screenNames";
 import SelectCountry from "../components/SelectCountry";
 import SelectTECNM from "../components/SelectTECNM";
-import validationConstraints from "../utils/validations/validationConstraints";
+import validationSignUp from "../utils/validations/validationSignUp";
 
 const SignUpScreen = ({ navigation }) => {
   //STATES
@@ -38,13 +38,8 @@ const SignUpScreen = ({ navigation }) => {
   };
 
 
-
-
-
-  var pattern = new RegExp("^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[-+_!@#$%^&*.,?]).+$");
-
   const validate = () => {
-    const validationErrors = validationConstraints(formData);
+    const validationErrors = validationSignUp(formData);
     if (validationErrors) {
       setErrors(validationErrors);
       return false;
@@ -55,7 +50,6 @@ const SignUpScreen = ({ navigation }) => {
   };
 
   const onSubmit = async () => {
-    console.log(formData)
     if (validate()) {
       console.log('Form Data', formData);
       navigation.navigate(screen.authenticated);
@@ -111,6 +105,12 @@ const SignUpScreen = ({ navigation }) => {
           </FormControl>
         </HStack>
       </Box>
+
+
+
+
+
+
 
       <Box>
         {/* contraseña */}

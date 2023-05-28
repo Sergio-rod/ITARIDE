@@ -1,10 +1,7 @@
 import validate from "validate.js";
 
-const validationConstraints = (formData) => {
-
-   
+const validationSignUp = (formData) => {
   const validationRules = {
-    
     code: {
       presence: { message: "Code is required" },
     },
@@ -24,14 +21,16 @@ const validationConstraints = (formData) => {
         tooShort: "Password is too short",
       },
       format: {
-        pattern: /^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[-+_!@#$%^&*.,?]).+$/,
+        pattern: /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[-+_!@#$%^&*.,?]).+$/,
         message: "Must contain a special character",
       },
     },
-
-
   };
-  return validate(formData, validationRules);
+
+  const validationErrors = validate(formData, validationRules);
+
+  console.log(validationErrors)
+  return validationErrors; // Retorna los errores de validación o un objeto vacío si no hay errores
 };
 
-export default validationConstraints;
+export default validationSignUp;

@@ -14,6 +14,7 @@ import styles from "../utils/styles";
 import { signInWithEmailAndPassword, signInWithPhoneNumber } from "firebase/auth";
 import { getAuth, RecaptchaVerifier } from "firebase/auth";
 import screen from "../utils/screenNames";
+import validationSignIn from "../utils/validations/validationSignIn";
 
 import ModalAuth from "../components/ModalAuth";
 
@@ -23,20 +24,32 @@ const LoginScreen = ({ navigation }) => {
   // view password
   const [show, setShow] = useState(false);
 
-  var pattern = new RegExp(
-    "^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[-+_!@#$%^&*.,?]).+$"
-  );
 
   const validate = () => {
-    // ...
-    // Resto del código de validación
-    // ...
+    const validationErrors = validationSignIn(formData);
+    if (validationErrors) {
+      setErrors(validationErrors);
+      return false;
+    }
+  
+    setErrors({});
+    return true;
   };
 
   const onSubmit = async () => {
-    const isAuth = true;
+      
+    var isAuth = false;
 
-    // Try authenticator
+
+    if (validate()) {
+      console.log('Form Data', formData);
+
+      isAuth=true;
+      console.log('You completed the form!');
+    }else{console.log('u must complete all')}
+
+   
+    //starts authenticator
     if (isAuth) {
       console.log('You are authenticated');
       navigation.navigate(screen.authenticated);
@@ -44,6 +57,12 @@ const LoginScreen = ({ navigation }) => {
       console.log('You must be authenticated');
     }
     // End authenticator
+
+
+
+   
+   
+ 
   };
 
   return (
@@ -55,18 +74,18 @@ const LoginScreen = ({ navigation }) => {
       </Box>
 
       <Box>
-        <FormControl isRequired isInvalid={'name' in errors}>
-          <FormControl.Label>Nick Name</FormControl.Label>
+        <FormControl isRequired isInvalid={'controlNumber' in errors}>
+          <FormControl.Label>Control Number</FormControl.Label>
           <Input
             p={3}
             placeholder="Nick Name"
-            onChangeText={value => setFormData({ ...formData, name: value })}
+            onChangeText={value => setFormData({ ...formData, controlNumber: value })}
           />
           {'name' in errors ? (
-            <FormControl.ErrorMessage>{errors.name}</FormControl.ErrorMessage>
+            <FormControl.ErrorMessage>{errors.controlNumber}</FormControl.ErrorMessage>
           ) : (
             <FormControl.HelperText>
-              Name should contain at least 3 characters.
+              Control number should contain at least 3 characters.
             </FormControl.HelperText>
           )}
         </FormControl>
