@@ -15,6 +15,7 @@ import styles from "../utils/styles";
 import screen from "../utils/screenNames";
 import SelectCountry from "../components/SelectCountry";
 import SelectTECNM from "../components/SelectTECNM";
+import validationConstraints from "../utils/validations/validationConstraints";
 
 const SignUpScreen = ({ navigation }) => {
   //STATES
@@ -28,60 +29,40 @@ const SignUpScreen = ({ navigation }) => {
   //selects
   const handleCountryValueChange = (value) => {
     setSelectedCountry(value); // Actualizar el valor seleccionado
-    setFormData({ ...formData, country: value }); // Agregar el valor al estado formData
+    setFormData({ ...formData, code: value }); // Agregar el valor al estado formData
   };
 
   const handleTECNMValueChange = (value) => {
     setSelectedTECNM(value); // Actualizar el valor seleccionado
-    setFormData({ ...formData, TECNM: value }); // Agregar el valor al estado formData
+    setFormData({ ...formData, campus: value }); // Agregar el valor al estado formData
   };
+
+
+
+
 
   var pattern = new RegExp("^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[-+_!@#$%^&*.,?]).+$");
 
   const validate = () => {
-    if (formData.name === undefined) {
-      setErrors({
-        ...errors,
-        name: 'Name is required'
-      });
-      return false;
-    } else if (formData.name.length < 3) {
-      setErrors({
-        ...errors,
-        name: 'Name is too short'
-      });
-      return false;
-    } else if (!formData.pass) {
-      console.log('passs 1 if ', formData.pass)
-      setErrors({
-        ...errors,
-        pass: 'Password is required'
-      });
-      return false;
-    } else if (formData.pass.length < 8) {
-      setErrors({
-        ...errors,
-        pass: 'Pass is too short'
-      });
-      return false;
-    } else if (!pattern.test(formData.pass)) {
-      //formData.pass.search('[A-Z]')
-      console.log('pass', formData.pass)
-      setErrors({
-        ...errors,
-        pass: 'Must contain a special character'
-      });
+    const validationErrors = validationConstraints(formData);
+    if (validationErrors) {
+      setErrors(validationErrors);
       return false;
     }
-
+  
     setErrors({});
     return true;
   };
 
   const onSubmit = async () => {
-    console.log('Form Data', formData);
-    navigation.navigate(screen.authenticated);
-    console.log('You completed the form!');
+    console.log(formData)
+    if (validate()) {
+      console.log('Form Data', formData);
+      navigation.navigate(screen.authenticated);
+      console.log('You completed the form!');
+    }else{console.log('u must complete all')}
+
+
   };
 
   return (
