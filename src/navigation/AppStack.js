@@ -24,44 +24,30 @@ const AppStack = () => {
 
 
   const isAuth = useSelector(state => state.auth.token !== null && state.auth.token !== "");
+
+  const didTryAutoLogin = useSelector(state=>state.auth.didTryAutoLogin);
+
+
+  let initialRouteName = screen.start;
+
+  if (isAuth) {
+    initialRouteName = screen.authenticated;
+  } else if (!isAuth && didTryAutoLogin) {
+    initialRouteName = screen.switchScreens;
+  }
+  else if (!isAuth && !didTryAutoLogin){
+    initialRouteName= screen.start;
+  }
+
   return (
-    
-    <Stack.Navigator 
-      initialRouteName={isAuth ? screen.authenticated : screen.start}
-      screenOptions={{headerShown: false}}
-    >
-   
-
-      <Stack.Screen
-          name={screen.start}
-          component={StartScreen}   
-
-      />
-      
-      <Stack.Screen
-          name={screen.signUp}
-          component={SignUpScreen}   
-
-      />
-          <Stack.Screen
-          name={screen.login}
-          component={LoginScreen}   
-
-      />
-         <Stack.Screen
-        name={screen.authenticated}
-        component={AuthenticatedScreen}   
-
-      />
-           <Stack.Screen
-        name={screen.switchScreens}
-        component={SwitchLoginSignin}   
-
-      />
-
-
+    <Stack.Navigator initialRouteName={initialRouteName} screenOptions={{ headerShown: false }}>
+      <Stack.Screen name={screen.start} component={StartScreen} />
+      <Stack.Screen name={screen.signUp} component={SignUpScreen} />
+      <Stack.Screen name={screen.login} component={LoginScreen} />
+      <Stack.Screen name={screen.authenticated} component={AuthenticatedScreen} />
+      <Stack.Screen name={screen.switchScreens} component={SwitchLoginSignin} />
     </Stack.Navigator>
-  )
-}
+  );
+};
 
 export default AppStack

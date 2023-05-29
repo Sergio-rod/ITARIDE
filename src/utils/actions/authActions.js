@@ -3,6 +3,7 @@ import { getAuth, createUserWithEmailAndPassword } from 'firebase/auth';
 import { set, child, getDatabase, ref } from 'firebase/database';
 import { async } from "validate.js";
 import {authenticate } from "../../../store/authSlice";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 export const signUp =  (formData) => {
   return async dispatch => {
@@ -13,11 +14,17 @@ export const signUp =  (formData) => {
     try {
       const result = await createUserWithEmailAndPassword(auth, formData.mail, formData.pass);
       const { uid, stsTokenManager } = result.user;
-      const {accessToken} = stsTokenManager
+      const {accessToken,expirationTime} = stsTokenManager
+
+      const expiryDate = new Date(expirationTime);
   
       const userData = await createUser(formData, uid);
   
       dispatch(authenticate({token:accessToken,userData}));
+      saveDataToStorage(accessToken,uid,expiryDate)
+
+
+
     } catch (error) {
       const errorCode = error.code;
       let message = "Something went wrong";
@@ -48,3 +55,13 @@ const createUser = async (formData, userId) => {
   const childRef = child(dbRef, `users/${userId}`);
   return set(childRef, userData).then(() => userData);
 };
+
+
+const saveDataToStorage = (token,userId,expiryDate) => {
+  AsyncStorage.setItem("userData",JSON.stringify({
+    token,
+    userId,
+    expiryDate: expiryDate.toISOString()
+
+  }))
+}
