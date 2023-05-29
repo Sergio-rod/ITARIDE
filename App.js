@@ -6,13 +6,16 @@ import { NavigationContainer } from '@react-navigation/native';
 // Stacks
 import AppStack from './src/navigation/AppStack';
 import { LogBox, SafeAreaView } from "react-native";
-//tests
+import { Provider } from "react-redux";
+import { store } from "./store/store";
+//Redux
 
 
 LogBox.ignoreLogs(['AsyncStorage has been extracted'])
 
 export default function App() {
   return (
+    <Provider store={store} >
     <SafeAreaView style={{ flex: 1 }}>
     <NavigationContainer>
         <NativeBaseProvider>
@@ -20,5 +23,6 @@ export default function App() {
         </NativeBaseProvider>
     </NavigationContainer>
     </SafeAreaView>
+    </Provider>
   );
 }

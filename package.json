@@ -40,6 +40,7 @@
     "react-native-web": "~0.18.10",
     "react-native-web-maps": "^0.3.0",
     "react-otp-input": "^3.0.2",
+    "react-redux": "^8.0.5",
     "validate.js": "^0.13.1"
   },
   "devDependencies": {

@@ -18,9 +18,14 @@ import SelectTECNM from "../components/SelectTECNM";
 import validationSignUp from "../utils/validations/validationSignUp";
 import { signUp } from "../utils/actions/authActions";
 import { Alert } from "react-native";
+import { useDispatch } from "react-redux";
 
 
 const SignUpScreen = ({ navigation }) => {
+
+
+  const dispatch = useDispatch();
+
   //STATES
   const [formData, setFormData] = useState({});
   const [errors, setErrors] = useState({});
@@ -55,7 +60,8 @@ const SignUpScreen = ({ navigation }) => {
 
   const authHandler = async () => {
     try {
-      await signUp(formData);
+      const action =  signUp(formData)
+      dispatch(action);
       // navigation.navigate(screen.authenticated);
 
       console.log("You completed the form!");
