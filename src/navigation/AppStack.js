@@ -13,6 +13,7 @@ import SignUpScreen from '../screens/SignUpScreen';
 import ChatScreen from '../screens/ChatScreen';
 import LoginScreen from '../screens/LoginScreen';
 import SwitchLoginSignin from '../components/SwitchLoginSignin';
+import { useSelector } from 'react-redux';
 
 const Stack = createNativeStackNavigator();
 
@@ -20,9 +21,13 @@ const Stack = createNativeStackNavigator();
 
 
 const AppStack = () => {
+
+
+  const isAuth = useSelector(state => state.auth.token !== null && state.auth.token !== "");
   return (
+    
     <Stack.Navigator 
-      initialRouteName={screen.start}
+      initialRouteName={isAuth ? screen.authenticated : screen.start}
       screenOptions={{headerShown: false}}
     >
    
@@ -32,6 +37,7 @@ const AppStack = () => {
           component={StartScreen}   
 
       />
+      
       <Stack.Screen
           name={screen.signUp}
           component={SignUpScreen}   

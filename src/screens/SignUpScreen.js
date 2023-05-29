@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect,useState } from "react";
 import {
   Box,
   VStack,
@@ -18,13 +18,16 @@ import SelectTECNM from "../components/SelectTECNM";
 import validationSignUp from "../utils/validations/validationSignUp";
 import { signUp } from "../utils/actions/authActions";
 import { Alert } from "react-native";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 
 
 const SignUpScreen = ({ navigation }) => {
 
-
   const dispatch = useDispatch();
+
+  //authenticate 
+  const isAuth = useSelector(state => state.auth.token!==null && state.auth.token!=='');
+
 
   //STATES
   const [formData, setFormData] = useState({});
@@ -57,14 +60,19 @@ const SignUpScreen = ({ navigation }) => {
     return true;
   };
 
+  useEffect(() => {
+    if (isAuth) {
+      navigation.navigate(screen.authenticated);
+    }
+  }, [isAuth, navigation]);
+
+
+  
 
   const authHandler = async () => {
     try {
       const action =  signUp(formData)
       dispatch(action);
-      // navigation.navigate(screen.authenticated);
-
-      console.log("You completed the form!");
     } catch (error) {
       if (error.message === "This mail is already in use") {
         Alert.alert("Error", error.message);
@@ -79,7 +87,6 @@ const SignUpScreen = ({ navigation }) => {
   const onSubmit = async () => {
     if (validate()) {
       authHandler();
-      navigation.navigate(screen.authenticated);
       console.log('You completed the form!');
     }else{console.log('u must complete all')}
 
