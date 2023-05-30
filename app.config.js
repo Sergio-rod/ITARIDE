@@ -19,6 +19,17 @@ export default{
     "ios": {
       "supportsTablet": true
     },
+    "plugins":[
+      [
+        "expo-screen-orientation",
+        {
+          "initialOrientation": "DEFAULT"
+        }
+      ]
+
+    ],
+
+
     "android": {
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
