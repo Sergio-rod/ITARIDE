@@ -1,99 +1,158 @@
-import React, { useEffect } from 'react';
-import { FormControl, VStack, Box, HStack, Image, Center } from 'native-base';
-import SliderMap from '../components/SliderMap';
-import SwitchButton from '../components/SwitchButtonMap';
-import MapImage from '../../assets/ImageMap.png';
-import { TouchableOpacity } from 'react-native';
-import screen from '../utils/screenNames';
-import { StyleSheet } from 'react-native';
-import * as ScreenOrientation from 'expo-screen-orientation';
+import React, { useState } from "react";
+import {
+  Box,
+  VStack,
+  FormControl,
+  Input,
+  Button,
+  Text,
+  Pressable,
+  Icon,
+  Stack
+} from "native-base";
+import styles from "../utils/styles";
+import { signInWithEmailAndPassword, signInWithPhoneNumber } from "firebase/auth";
+import { getAuth, RecaptchaVerifier } from "firebase/auth";
+import screen from "../utils/screenNames";
+import validationSignIn from "../utils/validations/validationSignIn";
 
-const RequestTripScreen = ({ navigation }) => {
-  useEffect(() => {
-     function setScreenOrientation() {
-       ScreenOrientation.unlockAsync();
-       ScreenOrientation.addOrientationChangeListener(handleOrientationChange);
+import ModalAuth from "../components/ModalAuth";
+import { signIn } from "../utils/actions/authActions";
+
+const LoginScreen = ({ navigation }) => {
+  const [formData, setFormData] = useState({});
+  const [errors, setErrors] = useState({});
+  // view password
+  const [show, setShow] = useState(false);
+
+
+  const validate = () => {
+    const validationErrors = validationSignIn(formData);
+    if (validationErrors) {
+      setErrors(validationErrors);
+      return false;
     }
-
-    setScreenOrientation();
-
-    return () => {
-      async function resetScreenOrientation() {
-         ScreenOrientation.unlockAsync();
-         ScreenOrientation.removeOrientationChangeListener(handleOrientationChange);
-      }
-
-      resetScreenOrientation();
-    };
-  }, []);
-
-  const handleOrientationChange = ({ orientationInfo }) => {
-    if (orientationInfo && orientationInfo.orientationLock) {
-      const { orientationLock } = orientationInfo;
   
-      if (orientationLock === ScreenOrientation.OrientationLock.UNKNOWN) {
-        // El dispositivo está en modo automático, permitir orientación en cualquier dirección
-        ScreenOrientation.unlockAsync();
+    setErrors({});
+    return true;
+  };
+
+  // const onSubmit = async () => {
+      
+  //   var isAuth = false;
+
+
+  //   if (validate()) {
+  //     console.log('Form Data', formData);
+
+  //     isAuth=true;
+  //     console.log('You completed the form!');
+  //   }else{console.log('u must complete all')}
+
+   
+  //   //starts authenticator
+  //   // if (isAuth) {
+  //   //   console.log('You are authenticated');
+  //   //   navigation.navigate(screen.authenticated);
+  //   // } else {
+  //   //   console.log('You must be authenticated');
+  //   // }
+  //   // End authenticator
+    
+   
+ 
+  // };
+
+
+  const authHandler = async () => {
+    try {
+      const action =  signIn(formData)
+      dispatch(action);
+    } catch (error) {
+      if (error.message === "This mail is already in use") {
+        Alert.alert("Error", error.message);
       } else {
-        // El dispositivo tiene una orientación fija, bloquear la orientación correspondiente
-        ScreenOrientation.lockAsync(orientationLock);
+        Alert.alert("Error", error.message);
       }
     }
   };
 
-  function onPressMapImage() {
-    navigation.navigate(screen.driver);
-  }
+  const onSubmit = async () => {
+    if (validate()) {
+      authHandler();
+      console.log('You completed the form!');
+    }else{console.log('u must complete all')}
+
+
+  };
+
 
   return (
-    <Center alignSelf={'center'} flex={1} width={'85%'}>
-      <VStack space={1} flex={1} alignItems={'center'} width={'80%'}>
-        <FormControl.Label>In range of</FormControl.Label>
-        <SliderMap />
+    <Stack space={3} alignSelf="center" px="4" safeArea mt="5" w={{ base: "100%", md: "50%" }}>
+      <Box alignSelf="center">
+        <Text bold fontSize="3xl" alignContent="center" size={20}>
+          Login
+        </Text>
+      </Box>
 
-        <HStack>
-          <Box alignSelf={'left'}>
-            <FormControl.Label>Show my location</FormControl.Label>
-            <SwitchButton />
-          </Box>
-          <Box alignSelf={'right'}>
-            <FormControl.Label>Need gas</FormControl.Label>
-            <SwitchButton />
-          </Box>
-        </HStack>
+      <Box>
+        <FormControl isRequired isInvalid={'mail' in errors}>
+          <FormControl.Label>Mail</FormControl.Label>
+          <Input
+            p={3}
+            placeholder="example@gmail.com"
+            onChangeText={value => setFormData({ ...formData, mail: value })}
+          />
+        </FormControl>
+      </Box>
 
-        <Box borderWidth={1} flex={2} width={'100%'}>
-          <TouchableOpacity style={styles.button} onPress={onPressMapImage} flex={1}>
-            <Image
-              width={'100%'}
-              height={'100%'}
-              source={MapImage}
-              resizeMode="cover"
-              flex={1}
-              alt={'Map Image'}
-            />
-          </TouchableOpacity>
-        </Box>
-      </VStack>
-    </Center>
+      <Box>
+        <FormControl isRequired isInvalid={'pass' in errors}>
+          <FormControl.Label>Password</FormControl.Label>
+          <Input
+            type={show ? "text" : "password"}
+            InputRightElement={
+              <Pressable onPress={() => setShow(!show)}>
+                <Icon
+                  as={<Icon name={show ? "visibility" : "visibility-off"} />}
+                  size={5}
+                  mr="2"
+                  color="muted.400"
+                />
+              </Pressable>
+            }
+            p={2}
+            placeholder="Password"
+            onChangeText={value => setFormData({ ...formData, pass: value })}
+          />
+          {'pass' in errors ? (
+            <FormControl.ErrorMessage>{errors.pass}</FormControl.ErrorMessage>
+          ) : (
+            <FormControl.HelperText>We'll keep this between us.</FormControl.HelperText>
+          )}
+        </FormControl>
+      </Box>
+
+      <Box>
+        <Button colorScheme="primary" variant="link" size="xs">
+          Did you forget the password? Press here
+        </Button>
+      </Box>
+
+      <Box alignItems="center">
+        <Button style={styles.buttonCian} onPress={onSubmit}>
+          Submit
+        </Button>
+      </Box>
+
+      <Box>
+        <Button colorScheme="primary" variant="link" size="xs"
+        onPress={() => navigation.navigate(screen.signUp)}>
+          Not have account? Press here
+        </Button>
+      </Box>
+    </Stack>
   );
 };
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: 'center',
-    paddingHorizontal: 10,
-  },
-  button: {
-    alignItems: 'center',
-    backgroundColor: 'transparent',
-    padding: 10,
-  },
-  countContainer: {
-    alignItems: 'center',
-    padding: 10,
-  },
-});
-
-export default RequestTripScreen;
+export default LoginScreen;

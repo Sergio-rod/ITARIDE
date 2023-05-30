@@ -23,8 +23,8 @@ const AppStack = () => {
     if (isAuth) {
       navigation.navigate(screen.authenticated);
     } else if (!isAuth && didTryAutoLogin) {
-      navigation.navigate(screen.switchScreens);
-    }
+      navigation.navigate(screen.start);
+    } 
   }, [isAuth, didTryAutoLogin, navigation]);
 
   return (

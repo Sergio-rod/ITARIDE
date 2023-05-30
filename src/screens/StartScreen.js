@@ -44,7 +44,7 @@ const StartScreen = ({ navigation }) => {
     }
 
     tryLogin();
-  }, []);
+  }, [dispatch]);
 
   return (
     <>

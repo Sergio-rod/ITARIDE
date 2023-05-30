@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import {
   Box,
   VStack,
@@ -11,19 +11,25 @@ import {
   Stack
 } from "native-base";
 import styles from "../utils/styles";
-import { signInWithEmailAndPassword, signInWithPhoneNumber } from "firebase/auth";
-import { getAuth, RecaptchaVerifier } from "firebase/auth";
+import { Alert } from "react-native";
+import { useDispatch, useSelector } from "react-redux";
 import screen from "../utils/screenNames";
 import validationSignIn from "../utils/validations/validationSignIn";
-
-import ModalAuth from "../components/ModalAuth";
+import { signIn } from "../utils/actions/authActions";
 
 const LoginScreen = ({ navigation }) => {
+  const dispatch = useDispatch();
+
+  // authenticate
+  const isAuth = useSelector(
+    (state) => state.auth.token !== null && state.auth.token !== ""
+  );
+
+  // STATES
   const [formData, setFormData] = useState({});
   const [errors, setErrors] = useState({});
   // view password
   const [show, setShow] = useState(false);
-
 
   const validate = () => {
     const validationErrors = validationSignIn(formData);
@@ -31,38 +37,37 @@ const LoginScreen = ({ navigation }) => {
       setErrors(validationErrors);
       return false;
     }
-  
+
     setErrors({});
     return true;
   };
 
-  const onSubmit = async () => {
-      
-    var isAuth = false;
-
-
-    if (validate()) {
-      console.log('Form Data', formData);
-
-      isAuth=true;
-      console.log('You completed the form!');
-    }else{console.log('u must complete all')}
-
-   
-    //starts authenticator
+  useEffect(() => {
     if (isAuth) {
-      console.log('You are authenticated');
       navigation.navigate(screen.authenticated);
-    } else {
-      console.log('You must be authenticated');
     }
-    // End authenticator
+  }, [isAuth, navigation]);
 
+  const authHandler = useCallback( async () => {
+    try {
+      const action = signIn(formData);
+      dispatch(action);
+    } catch (error) {
+      if (error.message === "This mail is already in use") {
+        Alert.alert("Error", error.message);
+      } else {
+        Alert.alert("Error", error.message);
+      }
+    }
+  },[dispatch]);
 
-
-   
-   
- 
+  const onSubmit = async () => {
+    if (validate()) {
+      authHandler();
+      console.log("You completed the form!");
+    } else {
+      console.log("You must complete all fields");
+    }
   };
 
   return (
@@ -74,18 +79,18 @@ const LoginScreen = ({ navigation }) => {
       </Box>
 
       <Box>
-        <FormControl isRequired isInvalid={'mail' in errors}>
+        <FormControl isRequired isInvalid={"mail" in errors}>
           <FormControl.Label>Mail</FormControl.Label>
           <Input
             p={3}
             placeholder="example@gmail.com"
-            onChangeText={value => setFormData({ ...formData, mail: value })}
+            onChangeText={(value) => setFormData({ ...formData, mail: value })}
           />
         </FormControl>
       </Box>
 
       <Box>
-        <FormControl isRequired isInvalid={'pass' in errors}>
+        <FormControl isRequired isInvalid={"pass" in errors}>
           <FormControl.Label>Password</FormControl.Label>
           <Input
             type={show ? "text" : "password"}
@@ -101,9 +106,9 @@ const LoginScreen = ({ navigation }) => {
             }
             p={2}
             placeholder="Password"
-            onChangeText={value => setFormData({ ...formData, pass: value })}
+            onChangeText={(value) => setFormData({ ...formData, pass: value })}
           />
-          {'pass' in errors ? (
+          {"pass" in errors ? (
             <FormControl.ErrorMessage>{errors.pass}</FormControl.ErrorMessage>
           ) : (
             <FormControl.HelperText>We'll keep this between us.</FormControl.HelperText>
@@ -120,6 +125,17 @@ const LoginScreen = ({ navigation }) => {
       <Box alignItems="center">
         <Button style={styles.buttonCian} onPress={onSubmit}>
           Submit
+        </Button>
+      </Box>
+
+      <Box>
+        <Button
+          colorScheme="primary"
+          variant="link"
+          size="xs"
+          onPress={() => navigation.navigate(screen.signUp)}
+        >
+          Don't have an account? Press here
         </Button>
       </Box>
     </Stack>
