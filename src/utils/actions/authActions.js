@@ -1,8 +1,6 @@
 import { getFirebaseApp } from "../firebaseHelper";
 import { getAuth, createUserWithEmailAndPassword } from 'firebase/auth';
 import { set, child, getDatabase, ref } from 'firebase/database';
-import { async } from "validate.js";
-import {authenticate } from "../../../store/authSlice";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
 export const signUp =  (formData) => {
@@ -26,6 +24,7 @@ export const signUp =  (formData) => {
 
 
     } catch (error) {
+      console.log(error)
       const errorCode = error.code;
       let message = "Something went wrong";
   
@@ -53,7 +52,8 @@ const createUser = async (formData, userId) => {
 
   const dbRef = ref(getDatabase());
   const childRef = child(dbRef, `users/${userId}`);
-  return set(childRef, userData).then(() => userData);
+  await set(childRef,userData);
+  return userData;
 };
 
 
