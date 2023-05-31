@@ -10,7 +10,8 @@ import * as ScreenOrientation from 'expo-screen-orientation';
 import Map from '../components/Map';
 
 const RequestTripScreen = ({ navigation }) => {
-  const [largeRadius, setLargeRadius] = useState(40); // Initial value for large radius
+  const [largeRadius, setLargeRadius] = useState(40); // Valor inicial para el radio grande
+  const [otherUserPosition, setOtherUserPosition] = useState({ top: 100, left: 150 }); // Posición inicial del círculo del otro usuario
 
   useEffect(() => {
     let orientationSubscription;
@@ -44,13 +45,26 @@ const RequestTripScreen = ({ navigation }) => {
     }
   };
 
-  function onPressMapImage() {
-    navigation.navigate(screen.driver);
-  }
+
 
   const handleLargeRadiusChange = (value) => {
     setLargeRadius(value);
   };
+
+  function onPressOtherUser() {
+    navigation.navigate(screen.passenger);
+  }
+
+  // Obtén tu ubicación actual y ajusta la posición del círculo del otro usuario
+  useEffect(() => {
+    // Aquí debes usar el método o librería que obtiene tu ubicación actual
+    // En este ejemplo, asumimos que la ubicación actual se obtiene de navigator.geolocation.getCurrentPosition()
+
+    // Aquí se establece la posición inicial del círculo del otro usuario cerca de tu ubicación
+    const initialUserPosition = { top: 100, left: 150 }; // Ajusta los valores según sea necesario
+
+    setOtherUserPosition(initialUserPosition);
+  }, []);
 
   return (
     <Center alignSelf={'center'} flex={1} width={'85%'}>
@@ -69,8 +83,12 @@ const RequestTripScreen = ({ navigation }) => {
           </Box>
         </HStack>
 
-        <Box borderWidth={1} flex={2} width={'100%'}>
+        <Box borderWidth={1} flex={2} width={'100%'} position="relative">
           <Map largeRadius={largeRadius} />
+
+          {/* Círculo del otro usuario */}
+          <TouchableOpacity onPress={onPressOtherUser} style={[styles.otherUserCircle, otherUserPosition]} />
+
         </Box>
       </VStack>
     </Center>
@@ -78,19 +96,14 @@ const RequestTripScreen = ({ navigation }) => {
 };
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: 'center',
-    paddingHorizontal: 10,
-  },
-  button: {
-    alignItems: 'center',
-    backgroundColor: 'transparent',
-    padding: 10,
-  },
-  countContainer: {
-    alignItems: 'center',
-    padding: 10,
+  // ...otros estilos
+
+  otherUserCircle: {
+    position: 'absolute',
+    width: 20,
+    height: 20,
+    borderRadius: 10,
+    backgroundColor: 'red',
   },
 });
 
