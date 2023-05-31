@@ -67,8 +67,8 @@ export const signIn =  (formData) => {
       const errorCode = error.code;
       let message = "Something went wrong";
   
-      if (errorCode === "auth/email-already-in-use") {
-        message = "This mail is already in use";
+      if (errorCode === "auth/wrong-password") {
+        message = "Wrong Password";
       }
   
       throw new Error(message);

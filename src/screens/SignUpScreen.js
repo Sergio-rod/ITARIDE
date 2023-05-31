@@ -72,7 +72,7 @@ const SignUpScreen = ({ navigation }) => {
   const authHandler = async () => {
     try {
       const action =  signUp(formData)
-      dispatch(action);
+      await dispatch(action);
     } catch (error) {
       if (error.message === "This mail is already in use") {
         Alert.alert("Error", error.message);

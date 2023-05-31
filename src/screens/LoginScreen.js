@@ -49,16 +49,15 @@ const LoginScreen = ({ navigation }) => {
     }
   }, [isAuth, navigation]);
 
-  const authHandler =  async () => {
+  const authHandler = async () => {
     try {
-      console.log(formData)
       const action = signIn(formData);
-      dispatch(action);
+      await dispatch(action);
     } catch (error) {
-      if (error.message === "This mail is already in use") {
+      if (error.message === "Wrong Password") {
         Alert.alert("Error", error.message);
       } else {
-        Alert.alert("Error", error.message);
+        Alert.alert("Error", "Invalid email or password");
       }
     }
   };
