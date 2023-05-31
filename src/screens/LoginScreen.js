@@ -81,7 +81,7 @@ const LoginScreen = ({ navigation }) => {
 
       <Box>
         <FormControl isRequired isInvalid={"mail" in errors}>
-          <FormControl.Label>Mail</FormControl.Label>
+          <FormControl.Label>E-mail</FormControl.Label>
           <Input
             p={3}
             placeholder="example@gmail.com"
