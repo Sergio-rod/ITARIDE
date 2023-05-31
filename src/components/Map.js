@@ -1,12 +1,13 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import { View, StyleSheet, TouchableOpacity, Button, Linking } from 'react-native';
-import MapView, { Marker, Polyline, Circle } from 'react-native-maps';
+import MapView, { Circle } from 'react-native-maps';
 import * as Location from 'expo-location';
 
 const Map = () => {
   const [userLocation, setUserLocation] = useState(null);
-  const [directions, setDirections] = useState(null);
-  const mapRef = React.useRef(null);
+  const mapRef = useRef(null);
+  const predefinedRadius = 20; // Radio predefinido en metros
+  const largeRadius = predefinedRadius * 2; // Radio más grande
 
   useEffect(() => {
     const getUserLocation = async () => {
@@ -17,7 +18,7 @@ const Map = () => {
           const { latitude, longitude } = location.coords;
           setUserLocation({ latitude, longitude });
         } else {
-          // Manejar el caso cuando el usuario no concede permisos de ubicación
+          Linking.openSettings();
         }
       } catch (error) {
         // Manejar los errores relacionados con la obtención de la ubicación
@@ -44,16 +45,9 @@ const Map = () => {
       <MapView style={styles.map} initialRegion={{ latitude: 21.876828359577342, longitude: -102.26117693478515, latitudeDelta: 0.0922, longitudeDelta: 0.0421 }} ref={mapRef}>
         {userLocation && (
           <>
-            <Marker coordinate={userLocation} />
-            <Circle center={userLocation} radius={100} fillColor="rgba(0, 0, 255, 0.2)" strokeColor="rgba(0, 0, 255, 0.5)" />
+            <Circle center={userLocation} radius={predefinedRadius} fillColor="#024959" strokeColor="rgba(0, 0, 255, 0.5)" />
+            <Circle center={userLocation} radius={largeRadius} fillColor="rgba(0, 0, 255, 0.1)" strokeColor="rgba(0, 0, 255, 0.3)" />
           </>
-        )}
-        {directions && (
-          <Polyline
-            coordinates={directions}
-            strokeWidth={3}
-            strokeColor="blue"
-          />
         )}
       </MapView>
       <TouchableOpacity style={styles.button} onPress={getDirections}>
