@@ -1,34 +1,39 @@
 import React from 'react';
-import { View, Text, StyleSheet, FlatList } from 'react-native';
+import { View, Text, StyleSheet, FlatList, TouchableOpacity } from 'react-native';
 import { Button } from 'native-base';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import styles from '../utils/styles';
+import screen from '../utils/screenNames';
+import { useNavigation } from '@react-navigation/native';
 
 
 const SettingsScreen = () => {
-
   // Definir una lista de configuraciones con sus respectivos íconos
   const settingsList = [
-    { name: 'Profile', icon: 'person' },
-    { name: 'Account', icon: 'key' },
-    { name: 'Language', icon: 'globe' },
-    { name: 'Privacy', icon: 'lock-closed' },
-    { name: 'Add Home', icon: 'home' },
-    { name: 'Add Work', icon: 'briefcase' }
+    { name: 'Profile', icon: 'person', screen: 'ProfileScreen' },
+    { name: 'Account', icon: 'key', screen: screen.accSettings },
+    { name: 'Language', icon: 'globe', screen: 'LanguageScreen' },
+    { name: 'Privacy', icon: 'lock-closed', screen: 'PrivacyScreen' },
+    { name: 'Add Home', icon: 'home', screen: 'AddHomeScreen' },
+    { name: 'Add Work', icon: 'briefcase', screen: 'AddWorkScreen' }
   ];
 
-  // Renderizar cada elemento de la lista como un botón
+  const navigation = useNavigation();
+
+  // Navegar a la pantalla correspondiente cuando se presiona un elemento
+  const navigateToScreen = (screen) => {
+    navigation.navigate(screen);
+  };
+  // Renderizar cada elemento de la lista como un botón presionable
   const renderSettingItem = ({ item }) => (
-    <Button 
-      block 
-      transparent 
-      iconLeft 
-      style={styles.settingButton} 
-      activeOpacity={0.8} // Configurar la opacidad cuando el botón es seleccionado
+    <TouchableOpacity
+      style={styles.settingButton}
+      activeOpacity={0.8}
+      onPress={() => navigateToScreen(item.screen)}
     >
       <Ionicons name={item.icon} style={styles.settingIcon} />
       <Text style={styles.settingText}>{item.name}</Text>
-    </Button>
+    </TouchableOpacity>
   );
 
   return (
@@ -41,6 +46,5 @@ const SettingsScreen = () => {
     </View>
   );
 };
-
 
 export default SettingsScreen;

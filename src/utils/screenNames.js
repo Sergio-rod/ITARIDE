@@ -15,7 +15,8 @@ export default screen = {
     trip:'Trip Screen',
     ride: 'Ride Screen',
     chat: 'Chat Screen',
-    switchScreens: 'Switch Login and Signup'
+    switchScreens: 'Switch Login and Signup',
+    accSettings:'Account Settings',
 
 
 };

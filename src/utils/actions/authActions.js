@@ -23,6 +23,7 @@ export const signUp =  (formData) => {
       dispatch(authenticate({token:accessToken,userData}));
       saveDataToStorage(accessToken,uid,expiryDate)
 
+     
 
 
     } catch (error) {
@@ -59,6 +60,9 @@ export const signIn =  (formData) => {
   
       dispatch(authenticate({token:accessToken,userData}));
       saveDataToStorage(accessToken,uid,expiryDate)
+
+      
+
 
 
 

@@ -8,7 +8,8 @@ export const getUserData = async (userId)=>{
         const userRef = child(dbRef, `users/${userId}`);
 
         const snapshot = await get(userRef);
-        console.log("DESDE USER ACTION",snapshot);
+        // console.log("DESDE USER ACTION",snapshot);
+        return snapshot.val();
         
     } catch (error) {
         console.log(error)
