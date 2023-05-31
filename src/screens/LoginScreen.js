@@ -17,6 +17,7 @@ import screen from "../utils/screenNames";
 import validationSignIn from "../utils/validations/validationSignIn";
 import { signIn } from "../utils/actions/authActions";
 
+
 const LoginScreen = ({ navigation }) => {
   const dispatch = useDispatch();
 
@@ -48,8 +49,9 @@ const LoginScreen = ({ navigation }) => {
     }
   }, [isAuth, navigation]);
 
-  const authHandler = useCallback( async () => {
+  const authHandler =  async () => {
     try {
+      console.log(formData)
       const action = signIn(formData);
       dispatch(action);
     } catch (error) {
@@ -59,7 +61,7 @@ const LoginScreen = ({ navigation }) => {
         Alert.alert("Error", error.message);
       }
     }
-  },[dispatch]);
+  };
 
   const onSubmit = async () => {
     if (validate()) {
