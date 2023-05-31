@@ -82,13 +82,13 @@ export const signIn =  (formData) => {
  
 };
 
-// export const userLogout = () =>{
-//   return async dispatch => {
-//     AsyncStorage.clear();
-//     clearTimeout(timer);
-//     dispatch(logout());
-//   }
-// }
+export const userLogout = () =>{
+  return async dispatch => {
+    AsyncStorage.clear();
+    // clearTimeout(timer);
+    // dispatch(logout());
+  }
+}
 
 export const updatedSignedUserData = async(userId,formData) =>{
   const dbRef = ref(getDatabase());

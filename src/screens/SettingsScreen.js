@@ -5,9 +5,14 @@ import Ionicons from 'react-native-vector-icons/Ionicons';
 import styles from '../utils/styles';
 import screen from '../utils/screenNames';
 import { useNavigation } from '@react-navigation/native';
+import { useDispatch } from 'react-redux';
+import { userLogout } from '../utils/actions/authActions';
 
 
 const SettingsScreen = () => {
+
+
+  const dispatch = useDispatch();
   // Definir una lista de configuraciones con sus respectivos íconos
   const settingsList = [
     { name: 'Profile', icon: 'person', screen: 'ProfileScreen' },
@@ -43,6 +48,14 @@ const SettingsScreen = () => {
         renderItem={renderSettingItem}
         keyExtractor={(item) => item.name}
       />
+           <Button
+          colorScheme="red"
+          variant="link"
+          size="md"
+          onPress={() => dispatch(userLogout())}
+        >
+          Logout
+        </Button>
     </View>
   );
 };
