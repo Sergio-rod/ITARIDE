@@ -13,7 +13,7 @@ import {
 } from "native-base";
 import styles from "../utils/styles";
 import validationSignUp from "../utils/validations/validationSignUp";
-import { signUp } from "../utils/actions/authActions";
+import { signUp, updatedSignedUserData } from "../utils/actions/authActions";
 import { Alert } from "react-native";
 import { useSelector } from "react-redux";
 
@@ -51,24 +51,35 @@ const AccountSettings = props => {
 
   
 
-  const authHandler = async () => {
+//   const authHandler = async () => {
+//     try {
+//       const action =  signUp(formData)
+//       await dispatch(action);
+//     } catch (error) {
+//       if (error.message === "This mail is already in use") {
+//         Alert.alert("Error", error.message);
+//       } else {
+//         Alert.alert("Error", error.message);
+//       }
+//     }
+//   };
+
+const saveHandler = async() =>{
+    const updatedValues = formData;
     try {
-      const action =  signUp(formData)
-      await dispatch(action);
+        await updatedSignedUserData(userData.userId,updatedValues);
+        
     } catch (error) {
-      if (error.message === "This mail is already in use") {
-        Alert.alert("Error", error.message);
-      } else {
-        Alert.alert("Error", error.message);
-      }
+        console.log(error)
+        
     }
-  };
+}
   
 
 
   const onSubmit = async () => {
-    if (validate()) {
-      authHandler();
+    if (true) {
+      saveHandler();
       console.log('You completed the form!');
     }else{console.log('u must complete all')}
 
