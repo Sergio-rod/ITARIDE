@@ -7,6 +7,7 @@ import { TouchableOpacity } from 'react-native';
 import screen from '../utils/screenNames';
 import { StyleSheet } from 'react-native';
 import * as ScreenOrientation from 'expo-screen-orientation';
+import Map from '../components/Map';
 
 
 const RequestTripScreen = ({ navigation }) => {
@@ -65,16 +66,10 @@ const RequestTripScreen = ({ navigation }) => {
         </HStack>
 
         <Box borderWidth={1} flex={2} width={'100%'}>
-          <TouchableOpacity style={styles.button} onPress={onPressMapImage} flex={1}>
-            <Image
-              width={'100%'}
-              height={'100%'}
-              source={MapImage}
-              resizeMode="cover"
-              flex={1}
-              alt={'Map Image'}
-            />
-          </TouchableOpacity>
+          {/* <TouchableOpacity style={styles.button} onPress={onPressMapImage} flex={1}> */}
+          <Map></Map>
+
+          {/* </TouchableOpacity> */}
         </Box>
       </VStack>
     </Center>
