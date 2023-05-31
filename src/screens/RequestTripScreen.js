@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { FormControl, VStack, Box, HStack, Image, Center } from 'native-base';
 import SliderMap from '../components/SliderMap';
 import SwitchButton from '../components/SwitchButtonMap';
@@ -9,8 +9,9 @@ import { StyleSheet } from 'react-native';
 import * as ScreenOrientation from 'expo-screen-orientation';
 import Map from '../components/Map';
 
-
 const RequestTripScreen = ({ navigation }) => {
+  const [largeRadius, setLargeRadius] = useState(40); // Initial value for large radius
+
   useEffect(() => {
     let orientationSubscription;
 
@@ -29,11 +30,10 @@ const RequestTripScreen = ({ navigation }) => {
     };
   }, []);
 
-
   const handleOrientationChange = ({ orientationInfo }) => {
     if (orientationInfo && orientationInfo.orientationLock) {
       const { orientationLock } = orientationInfo;
-  
+
       if (orientationLock === ScreenOrientation.OrientationLock.UNKNOWN) {
         // El dispositivo está en modo automático, permitir orientación en cualquier dirección
         ScreenOrientation.unlockAsync();
@@ -48,11 +48,15 @@ const RequestTripScreen = ({ navigation }) => {
     navigation.navigate(screen.driver);
   }
 
+  const handleLargeRadiusChange = (value) => {
+    setLargeRadius(value);
+  };
+
   return (
     <Center alignSelf={'center'} flex={1} width={'85%'}>
       <VStack space={1} flex={1} alignItems={'center'} width={'80%'}>
         <FormControl.Label>In range of</FormControl.Label>
-        <SliderMap />
+        <SliderMap value={largeRadius} onValueChange={handleLargeRadiusChange} />
 
         <HStack>
           <Box alignSelf={'left'}>
@@ -66,10 +70,7 @@ const RequestTripScreen = ({ navigation }) => {
         </HStack>
 
         <Box borderWidth={1} flex={2} width={'100%'}>
-          {/* <TouchableOpacity style={styles.button} onPress={onPressMapImage} flex={1}> */}
-          <Map></Map>
-
-          {/* </TouchableOpacity> */}
+          <Map largeRadius={largeRadius} />
         </Box>
       </VStack>
     </Center>

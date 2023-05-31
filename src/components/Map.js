@@ -3,11 +3,10 @@ import { View, StyleSheet, TouchableOpacity, Button, Linking } from 'react-nativ
 import MapView, { Circle } from 'react-native-maps';
 import * as Location from 'expo-location';
 
-const Map = () => {
+const Map = ({ largeRadius }) => {
   const [userLocation, setUserLocation] = useState(null);
   const mapRef = useRef(null);
   const predefinedRadius = 20; // Radio predefinido en metros
-  const largeRadius = predefinedRadius * 2; // Radio más grande
 
   useEffect(() => {
     const getUserLocation = async () => {

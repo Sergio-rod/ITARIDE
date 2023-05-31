@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { FormControl, VStack, Box, HStack, Image, Center } from 'native-base';
 import SliderMap from '../components/SliderMap';
 import SwitchButton from '../components/SwitchButtonMap';
@@ -7,9 +7,11 @@ import { TouchableOpacity } from 'react-native';
 import screen from '../utils/screenNames';
 import { StyleSheet } from 'react-native';
 import * as ScreenOrientation from 'expo-screen-orientation';
-import Map from '../components/Map'
+import Map from '../components/Map';
 
-const RequestRideScreen = ({ navigation }) => {
+const RequestTripScreen = ({ navigation }) => {
+  const [largeRadius, setLargeRadius] = useState(40); // Initial value for large radius
+
   useEffect(() => {
     let orientationSubscription;
 
@@ -31,7 +33,7 @@ const RequestRideScreen = ({ navigation }) => {
   const handleOrientationChange = ({ orientationInfo }) => {
     if (orientationInfo && orientationInfo.orientationLock) {
       const { orientationLock } = orientationInfo;
-  
+
       if (orientationLock === ScreenOrientation.OrientationLock.UNKNOWN) {
         // El dispositivo está en modo automático, permitir orientación en cualquier dirección
         ScreenOrientation.unlockAsync();
@@ -46,27 +48,29 @@ const RequestRideScreen = ({ navigation }) => {
     navigation.navigate(screen.passenger);
   }
 
+  const handleLargeRadiusChange = (value) => {
+    setLargeRadius(value);
+  };
+
   return (
-    <Center alignSelf="center" flex={1} width="85%">
-      <VStack space={1} flex={1} alignItems="center" width="80%">
+    <Center alignSelf={'center'} flex={1} width={'85%'}>
+      <VStack space={1} flex={1} alignItems={'center'} width={'80%'}>
         <FormControl.Label>In range of</FormControl.Label>
-        <SliderMap />
+        <SliderMap value={largeRadius} onValueChange={handleLargeRadiusChange} />
 
         <HStack>
-          <Box alignSelf="left">
+          <Box alignSelf={'left'}>
             <FormControl.Label>Show my location</FormControl.Label>
             <SwitchButton />
           </Box>
-          <Box alignSelf="right">
+          <Box alignSelf={'right'}>
             <FormControl.Label>Need gas</FormControl.Label>
             <SwitchButton />
           </Box>
         </HStack>
 
-        <Box borderWidth={1} flex={2} width="100%">
-          {/* <TouchableOpacity style={styles.button} onPress={onPressMapImage} flex={1}> */}
-           <Map></Map>
-          {/* </TouchableOpacity> */}
+        <Box borderWidth={1} flex={2} width={'100%'}>
+          <Map largeRadius={largeRadius} />
         </Box>
       </VStack>
     </Center>
@@ -90,4 +94,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default RequestRideScreen;
+export default RequestTripScreen;
