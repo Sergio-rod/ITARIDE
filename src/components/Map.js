@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { View, StyleSheet, TouchableOpacity, Button } from 'react-native';
-import MapView, { Marker, Polyline } from 'react-native-maps';
+import MapView, { Marker, Polyline, Circle } from 'react-native-maps';
 
 const Map = () => {
   const [userLocation, setUserLocation] = useState(null);
@@ -30,7 +30,12 @@ const Map = () => {
   return (
     <View style={styles.container}>
       <MapView style={styles.map} initialRegion={{ latitude: 21.876828359577342, longitude: -102.26117693478515, latitudeDelta: 0.0922, longitudeDelta: 0.0421 }}>
-        {userLocation && <Marker coordinate={userLocation} />}
+        {userLocation && (
+          <>
+            <Marker coordinate={userLocation} />
+            <Circle center={userLocation} radius={100} fillColor="rgba(0, 0, 255, 0.2)" strokeColor="rgba(0, 0, 255, 0.5)" />
+          </>
+        )}
         {directions && (
           <Polyline
             coordinates={directions} // Aquí debes proporcionar las coordenadas de los puntos de las direcciones obtenidas
@@ -40,7 +45,7 @@ const Map = () => {
         )}
       </MapView>
       <TouchableOpacity style={styles.button} onPress={getDirections}>
-        <Button title="Obtener direcciones" onPress={getDirections} />
+        <Button title="Get my address" onPress={getDirections} />
       </TouchableOpacity>
     </View>
   );
