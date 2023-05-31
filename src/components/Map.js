@@ -1,35 +1,47 @@
 import React, { useEffect, useState } from 'react';
-import { View, StyleSheet, TouchableOpacity, Button } from 'react-native';
+import { View, StyleSheet, TouchableOpacity, Button, Linking } from 'react-native';
 import MapView, { Marker, Polyline, Circle } from 'react-native-maps';
+import * as Location from 'expo-location';
 
 const Map = () => {
   const [userLocation, setUserLocation] = useState(null);
   const [directions, setDirections] = useState(null);
+  const mapRef = React.useRef(null);
 
   useEffect(() => {
-    if (navigator.geolocation) {
-      navigator.geolocation.getCurrentPosition((position) => {
-        const { latitude, longitude } = position.coords;
-        setUserLocation({ latitude, longitude });
-      });
-    }
+    const getUserLocation = async () => {
+      try {
+        const { status } = await Location.requestForegroundPermissionsAsync();
+        if (status === 'granted') {
+          const location = await Location.getCurrentPositionAsync({});
+          const { latitude, longitude } = location.coords;
+          setUserLocation({ latitude, longitude });
+        } else {
+          // Manejar el caso cuando el usuario no concede permisos de ubicación
+        }
+      } catch (error) {
+        // Manejar los errores relacionados con la obtención de la ubicación
+      }
+    };
+
+    getUserLocation();
   }, []);
 
   const getDirections = () => {
-    // Aquí puedes usar una biblioteca o servicio de enrutamiento para obtener las direcciones
-    // entre las ubicaciones deseadas y luego actualizar el estado con los resultados.
-    // Por ejemplo, puedes usar la API de Google Directions o servicios como Mapbox Directions.
-    // Una vez que obtengas las direcciones, puedes establecerlas en el estado "directions".
-
-    // Ejemplo de código utilizando la API de Google Directions
-    // ...
-
-    // setDirections(result);
+    if (userLocation) {
+      const region = {
+        latitude: userLocation.latitude,
+        longitude: userLocation.longitude,
+        latitudeDelta: 0.0922,
+        longitudeDelta: 0.0421,
+      };
+      mapRef.current.animateToRegion(region, 1000);
+    }
   };
 
   return (
     <View style={styles.container}>
-      <MapView style={styles.map} initialRegion={{ latitude: 21.876828359577342, longitude: -102.26117693478515, latitudeDelta: 0.0922, longitudeDelta: 0.0421 }}>
+      <MapView style={styles.map} initialRegion={{ latitude: 21.876828359577342, longitude: -102.26117693478515, latitudeDelta: 0.0922, longitudeDelta: 0.0421 }} ref={mapRef}>
         {userLocation && (
           <>
             <Marker coordinate={userLocation} />
@@ -38,7 +50,7 @@ const Map = () => {
         )}
         {directions && (
           <Polyline
-            coordinates={directions} // Aquí debes proporcionar las coordenadas de los puntos de las direcciones obtenidas
+            coordinates={directions}
             strokeWidth={3}
             strokeColor="blue"
           />

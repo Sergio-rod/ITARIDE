@@ -1,6 +1,6 @@
 import 'dotenv/config';
 
-export default{
+export default {
   "expo": {
     "name": "Front",
     "slug": "Front",
@@ -17,9 +17,14 @@ export default{
       "**/*"
     ],
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "infoPlist": {
+        "NSLocationWhenInUseUsageDescription": "Permiso para acceder a la ubicación del dispositivo.",
+        "NSLocationAlwaysUsageDescription": "Permiso para acceder a la ubicación del dispositivo."
+
+      }
     },
-    "plugins":[
+    "plugins": [
       [
         "expo-screen-orientation",
         {
@@ -34,12 +39,13 @@ export default{
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#ffffff"
-      }
+      },
+      "permissions": ["ACCESS_FINE_LOCATION"]
     },
     "web": {
       "favicon": "./assets/favicon.png"
     },
-    extra:{
+    extra: {
       apiKey: process.env.API_KEY,
       authDomain: process.env.AUTH_DOMAIN,
       projectId: process.env.PROJECT_ID,
