@@ -1,4 +1,4 @@
-import React, { useEffect,useReducer,useState } from "react";
+import React, { useCallback, useEffect, useReducer, useState } from "react";
 import {
   Box,
   VStack,
@@ -18,25 +18,18 @@ import { Alert } from "react-native";
 import { useDispatch, useSelector } from "react-redux";
 import { updateLoggeddInUserData } from "../../store/authSlice";
 
-
-
-const AccountSettings = props => {
-
+const AccountSettings = (props) => {
   const dispatch = useDispatch();
+  const [showSuccessMessage, setShowSuccessMessage] = useState(false);
 
-  const[showSuccessMessage,setShowSuccessMessage] = useState();
-
-
-  const userData = useSelector(state => state.auth.userData)
+  const userData = useSelector((state) => state.auth.userData);
   console.log(userData);
 
+  const firstName = userData.firstName || "";
 
-
-  //STATES
+  // STATES
   const [formData, setFormData] = useState({});
   const [errors, setErrors] = useState({});
-
-
 
   const validate = () => {
     const validationErrors = validationSignUp(formData);
@@ -44,128 +37,95 @@ const AccountSettings = props => {
       setErrors(validationErrors);
       return false;
     }
-  
+
     setErrors({});
     return true;
   };
 
-//   useEffect(() => {
-//     if (isAuth) {
-//       navigation.navigate(screen.authenticated);
-//     }
-//   }, [isAuth, navigation]);
-
-
-  
-
-//   const authHandler = async () => {
-//     try {
-//       const action =  signUp(formData)
-//       await dispatch(action);
-//     } catch (error) {
-//       if (error.message === "This mail is already in use") {
-//         Alert.alert("Error", error.message);
-//       } else {
-//         Alert.alert("Error", error.message);
-//       }
-//     }
-//   };
-
-const saveHandler = async() =>{
+  const saveHandler = useCallback(async () => {
     const updatedValues = formData;
     try {
-        await updatedSignedUserData(userData.userId,updatedValues);
-        dispatch(updateLoggeddInUserData({newData:updatedValues}));
-        setShowSuccessMessage(true);
-
-        
-        
-        
+      await updatedSignedUserData(userData.userId, updatedValues);
+      dispatch(updateLoggeddInUserData({ newData: updatedValues }));
+      setShowSuccessMessage(true);
     } catch (error) {
-        console.log(error)
-        
+      console.log(error);
     }
-}
-  
+  }, [formData, dispatch]);
 
+  const hasChanges = () => {
+    const currentValues = formData;
+    return currentValues.firstName !== firstName && currentValues.firstName !== undefined;
+  };
 
   const onSubmit = async () => {
-    if (true) {
+    if (hasChanges()) {
       saveHandler();
-      console.log('You completed the form!');
-    }else{console.log('u must complete all')}
-
-
+      console.log("You completed the form!");
+    } else {
+      console.log("You must complete all fields");
+    }
   };
 
   return (
-    <Stack space={3} px="4" safeArea >
-
-      <Box  marginBottom={5} marginTop={5} alignSelf={"center"}>
-        <Text bold fontSize={'3xl'} >Account Settings</Text>
+    <Stack space={3} px="4" safeArea>
+      <Box marginBottom={5} marginTop={5} alignSelf="center">
+        <Text bold fontSize="3xl">
+          Account Settings
+        </Text>
       </Box>
 
-
       <Box>
-        {/* Email */}
-        <FormControl isRequired isInvalid={'firstName' in errors}>
+        {/* First Name */}
+        <FormControl isRequired isInvalid={"firstName" in errors}>
           <FormControl.Label>First Name</FormControl.Label>
           <Input
-            type='text'
+            type="text"
             p={2}
             placeholder="First Name"
-            onChangeText={value => setFormData({ ...formData, firstName: value })}
+            onChangeText={(value) =>
+              setFormData({ ...formData, firstName: value })
+            }
           />
         </FormControl>
       </Box>
 
       <Box>
-        {/* Email */}
-        <FormControl isRequired isInvalid={'lastName' in errors}>
+        {/* Last Name */}
+        <FormControl isRequired isInvalid={"lastName" in errors}>
           <FormControl.Label>Last Name</FormControl.Label>
           <Input
-            type='text'
+            type="text"
             p={2}
             placeholder="Last Name"
-            onChangeText={value => setFormData({ ...formData, lastName: value })}
+            onChangeText={(value) =>
+              setFormData({ ...formData, lastName: value })
+            }
           />
         </FormControl>
       </Box>
 
-
-
-
-
-
-
-     
       <Box>
-        {/* Email */}
-        <FormControl isRequired isInvalid={'about' in errors}>
+        {/* About Me */}
+        <FormControl isRequired isInvalid={"about" in errors}>
           <FormControl.Label>About Me</FormControl.Label>
           <Input
-            type='text'
+            type="text"
             p={2}
             placeholder="Something about me...."
-            onChangeText={value => setFormData({ ...formData, about: value })}
+            onChangeText={(value) => setFormData({ ...formData, about: value })}
           />
         </FormControl>
       </Box>
 
+      {showSuccessMessage && <Text>Saved</Text>}
 
-      {
-        showSuccessMessage && <Text>Saved</Text>
-      }
-
-   
-
-
-
-
-      <Box alignItems={'center'}>
-        <Button style={styles.buttonCian} onPress={onSubmit}>
-          Submit
-        </Button>
+      <Box alignItems="center">
+        {hasChanges() && (
+          <Button style={styles.buttonCian} onPress={onSubmit}>
+            Submit
+          </Button>
+        )}
       </Box>
     </Stack>
   );
