@@ -16,7 +16,7 @@ const BottomTabNavigator = () => {
 
   return (
 
-    <Tab.Navigator  initialRouteName={screen.home} screenOptions={{headerShown: false}}>
+    <Tab.Navigator  initialRouteName={screen.home} screenOptions={{headerShown: true}}>
 
       <Tab.Screen
         name={screen.homeStack}

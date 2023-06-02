@@ -36,7 +36,7 @@ const ChatsScreen = () => {
         recentText: "I will call today.",
         avatarUrl: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRBwgu1A5zgPSvfE83nurkuzNEoXs9DMNr8Ww&usqp=CAU"
     }];
-    return <View style={styles.containerFlat}>
+    return <View borderWidth={1} style={styles.containerFlat}>
 
         <Heading fontSize="xl" p="4" pb="3">
             Inbox

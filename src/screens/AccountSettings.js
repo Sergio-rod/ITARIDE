@@ -26,6 +26,9 @@ const AccountSettings = (props) => {
   console.log(userData);
 
   const firstName = userData.firstName || "";
+  const lastName = userData.firstName || "";
+  const about = userData.firstName || "";
+
 
   // STATES
   const [formData, setFormData] = useState({});
@@ -55,7 +58,9 @@ const AccountSettings = (props) => {
 
   const hasChanges = () => {
     const currentValues = formData;
-    return currentValues.firstName !== firstName && currentValues.firstName !== undefined;
+    return currentValues.firstName != firstName ||
+           currentValues.lastName != lastName ||
+           currentValues.about != about;
   };
 
   const onSubmit = async () => {
