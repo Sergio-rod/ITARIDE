@@ -72,16 +72,11 @@ const RequestRideScreen = ({ navigation }) => {
         <FormControl.Label>In range of</FormControl.Label>
         <SliderMap value={largeRadius} onValueChange={handleLargeRadiusChange} />
 
-        <HStack>
           <Box alignSelf={'left'}>
             <FormControl.Label>Show my location</FormControl.Label>
             <SwitchButton />
           </Box>
-          <Box alignSelf={'right'}>
-            <FormControl.Label>Need gas</FormControl.Label>
-            <SwitchButton />
-          </Box>
-        </HStack>
+         
 
         <Box borderWidth={1} flex={2} width={'100%'} position="relative">
           <Map largeRadius={largeRadius} />

@@ -15,13 +15,20 @@ import styles from "../utils/styles";
 import validationSignUp from "../utils/validations/validationSignUp";
 import { signUp, updatedSignedUserData } from "../utils/actions/authActions";
 import { Alert } from "react-native";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { updateLoggeddInUserData } from "../../store/authSlice";
+
 
 
 const AccountSettings = props => {
 
+  const dispatch = useDispatch();
 
-    const userData = useSelector(state => state.auth.userData)
+  const[showSuccessMessage,setShowSuccessMessage] = useState();
+
+
+  const userData = useSelector(state => state.auth.userData)
+  console.log(userData);
 
 
 
@@ -68,6 +75,11 @@ const saveHandler = async() =>{
     const updatedValues = formData;
     try {
         await updatedSignedUserData(userData.userId,updatedValues);
+        dispatch(updateLoggeddInUserData({newData:updatedValues}));
+        setShowSuccessMessage(true);
+
+        
+        
         
     } catch (error) {
         console.log(error)
@@ -139,6 +151,13 @@ const saveHandler = async() =>{
           />
         </FormControl>
       </Box>
+
+
+      {
+        showSuccessMessage && <Text>Saved</Text>
+      }
+
+   
 
 
 
