@@ -8,7 +8,7 @@ const SliderMap = ({ value, onValueChange }) => {
       value={value}
       onValueChange={onValueChange}
       minimumValue={0}
-      maximumValue={500}
+      maximumValue={1000}
       minimumTrackTintColor="#024959"
       maximumTrackTintColor="#d3d3d3"
       thumbTintColor="#024959"

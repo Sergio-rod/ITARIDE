@@ -1,12 +1,7 @@
 import React, { useState } from 'react';
 import { Switch, Box } from 'native-base';
 
-function SwitchButton() {
-  const [isEnabled, setIsEnabled] = useState(false);
-
-  const toggleSwitch = () => {
-    setIsEnabled(previousState => !previousState);
-  };
+function SwitchButton({isEnabled, toggleSwitch}) {
 
   return (
     <Box>
