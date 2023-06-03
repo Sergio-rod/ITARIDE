@@ -17,7 +17,7 @@ export default screen = {
     chat: 'Chat Screen',
     switchScreens: 'Switch Login and Signup',
     accSettings:'Account Settings',
-    newChat: 'New Chat Screen'
+    newChat: 'Type with someone'
 
 
 };

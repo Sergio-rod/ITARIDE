@@ -30,7 +30,7 @@ const HomeStackNavigator = () => {
         <HomeStack.Screen name={screen.accSettings} component={AccountSettings} />
       </HomeStack.Group>
 
-      <HomeStack.Group screenOptions={{presentation:'containedModal', headerShown:false}} >
+      <HomeStack.Group screenOptions={{presentation:'containedModal', headerShown:true}} >
 
 
       <HomeStack.Screen name={screen.newChat} component={NewChatScreen} />
