@@ -9,6 +9,7 @@ import { FontAwesome } from "@expo/vector-icons";
 import { TextInput } from "react-native-gesture-handler";
 import commonStyles from "../../constants/commonStyles";
 import { searchUsers } from "../utils/actions/userActions";
+import DataItem from "../components/DataItem";
 
 
 const NewChatScreen = props => {
@@ -81,7 +82,19 @@ const NewChatScreen = props => {
                 data={Object.keys(users)}
                 renderItem={(itemData) => {
                     const userId = itemData.item;
-                    return <Text>{userId}</Text>
+                    const userData = users[userId]
+
+
+                    return <DataItem
+                    
+                        title={`${userData.controlNumber} ${userData.mail}`}
+                        subTitle= {`${userData.about}`}
+                        // image={userData.profilePicture}
+                        >
+                        
+
+                        
+                    </DataItem>
                 }}
             />
         }
