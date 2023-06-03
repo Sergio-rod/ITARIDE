@@ -3,5 +3,6 @@ export default {
     lightGrey: "#bdc3c7",
     extralightGrey: "#ededed",
     textColor: "black",
+    primary: "black"
 
 }

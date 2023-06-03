@@ -3,27 +3,20 @@ import { View, Text } from "native-base";
 import { HeaderButtons, Item } from "react-navigation-header-buttons";
 import CustomHeaderButton from "../components/CustomHeaderButton";
 import screen from "../utils/screenNames";
-import { StyleSheet } from "react-native";
+import { ActivityIndicator, FlatList, StyleSheet } from "react-native";
 import colors from "../../constants/colors";
 import { FontAwesome } from "@expo/vector-icons";
 import { TextInput } from "react-native-gesture-handler";
 import commonStyles from "../../constants/commonStyles";
-import { serverTimestamp } from "firebase/database";
 import { searchUsers } from "../utils/actions/userActions";
+
 
 const NewChatScreen = props => {
 
-
     const [isLoading, setIsLoading] = useState(false);
     const [users, setUsers] = useState();
-    const [noResultsFound, setnoResultsFound] = useState(false);
-    const [searchTerm, setsearchTerm] = useState('');
-
-
-
-
-
-
+    const [noResultsFound, setNoResultsFound] = useState(false);
+    const [searchTerm, setSearchTerm] = useState('');
 
     useEffect(() => {
         props.navigation.setOptions({
@@ -31,128 +24,102 @@ const NewChatScreen = props => {
                 return <HeaderButtons HeaderButtonComponent={CustomHeaderButton}>
                     <Item
                         title="Close"
-                        onPress={() => props.navigation.goBack()}
-                    />
+                        onPress={() => props.navigation.goBack()}/>
                 </HeaderButtons>
-
-            }
-        });
+            },
+            headerTitle: "New chat"
+        })
     }, []);
 
-    useEffect(()=>{
-        const delaySearch = setTimeout(async ()=>{
-            console.log("abc")
-            if(!searchTerm || searchTerm ===""){
+    useEffect(() => {
+        const delaySearch = setTimeout(async () => {
+            if (!searchTerm || searchTerm === "") {
                 setUsers();
-                setnoResultsFound(false);
+                setNoResultsFound(false);
                 return;
             }
 
             setIsLoading(true);
 
+            const usersResult = await searchUsers(searchTerm);
+            setUsers(usersResult);
 
-            const userResult= await searchUsers(searchTerm);
-            console.log(userResult);
-
-            
+            if (Object.keys(usersResult).length === 0) {
+                setNoResultsFound(true);
+            }
+            else {
+                setNoResultsFound(false);
+            }
 
             setIsLoading(false);
-        },500)
-
+        }, 500);
 
         return () => clearTimeout(delaySearch);
-    }, [searchTerm])
+    }, [searchTerm]);
+    
+    return <View flex={1}>
+        <View style={styles.searchContainer}>
+            <FontAwesome name="search" size={15} color={colors.lightGrey} />
 
-
-
-    return (
-        <View flex={1} >
-
-
-            <View style={styles.searchContainer}>
-
-                <FontAwesome name="search" size={15} color={colors.lightGrey} />
-                <TextInput
-
-                    placeholder="Search"
-                    style={styles.searchBox}
-                    onChangeText={(text) => setsearchTerm(text)}
-                />
-
-
-
-
-
-
-
-
-
-            </View>
-
-
-            {
-
-                !isLoading && noResultsFound && (
-                    <View style={commonStyles.center}>
-                        <FontAwesome
-                            name="question"
-                            size={55}
-                            color={colors.lightGrey}
-                            style={styles.noResultsIcon}>
-                         
-                        </FontAwesome>
-                        <Text style={styles.notResultstEXT}> No users found! </Text>
-
-
-
-                    </View>
-
-
-
-                )
-
-
-
-            }
-
-            {
-
-                !isLoading && !users && (
-                    <View style={commonStyles.center}>
-                        <FontAwesome
-                            name="users"
-                            size={55}
-                            color={colors.lightGrey}
-                            style={styles.noResultsIcon}>
-
-                        </FontAwesome>
-                        <Text style={styles.notResultstEXT}> Enter a name to search for a user! </Text>
-
-
-
-                    </View>
-
-
-
-                )
-
-
-
-            }
-
-
-
+            <TextInput
+                placeholder='Search'
+                style={styles.searchBox}
+                onChangeText={(text) => setSearchTerm(text)}
+            />
         </View>
-    );
 
+        {
+            isLoading && 
+            <View style={commonStyles.center}>
+                <ActivityIndicator size={'large'} color={colors.primary} />
+            </View>
+        }
+
+        {
+            !isLoading && !noResultsFound && users &&
+            <FlatList
+                data={Object.keys(users)}
+                renderItem={(itemData) => {
+                    const userId = itemData.item;
+                    return <Text>{userId}</Text>
+                }}
+            />
+        }
+
+        {
+            !isLoading && noResultsFound && (
+                <View style={commonStyles.center}>
+                    <FontAwesome
+                        name="question"
+                        size={55}
+                        color={colors.lightGrey}
+                        style={styles.noResultsIcon}/>
+                    <Text style={styles.noResultsText}>No users found!</Text>
+                </View>
+            )
+        }
+
+        {
+            !isLoading && !users && (
+                <View style={commonStyles.center}>
+                    <FontAwesome
+                        name="users"
+                        size={55}
+                        color={colors.lightGrey}
+                        style={styles.noResultsIcon}/>
+                    <Text style={styles.noResultsText}>Enter a name to search for a user!</Text>
+                </View>
+            )
+        }
+
+    </View>
 };
-
 
 const styles = StyleSheet.create({
     searchContainer: {
         flexDirection: 'row',
         alignItems: 'center',
-        backgroundColor: colors.extralightGrey,
+        backgroundColor: colors.extraLightGrey,
         height: 30,
         marginVertical: 8,
         paddingHorizontal: 8,
@@ -162,19 +129,15 @@ const styles = StyleSheet.create({
     searchBox: {
         marginLeft: 8,
         fontSize: 15,
-        width: '100%',
+        width: '100%'
     },
     noResultsIcon: {
         marginBottom: 20
     },
-    noResultsFound: {
+    noResultsText: {
         color: colors.textColor,
-        fontFamily: 'regular',
         letterSpacing: 0.3
-
-
     }
 })
-
 
 export default NewChatScreen;
