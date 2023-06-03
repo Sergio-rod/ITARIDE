@@ -7,7 +7,7 @@ import PassengerScreen from '../screens/PassengerScreen';
 import DriverScreen from '../screens/DriverScreen';
 import ChatScreen from '../screens/ChatScreen';
 import AccountSettings from '../screens/AccountSettings';
-import NewChatsScreen from '../screens/NewChatScreen';
+import NewChatScreen from '../screens/NewChatScreen';
 
 const HomeStack = createNativeStackNavigator();
 
@@ -30,8 +30,10 @@ const HomeStackNavigator = () => {
         <HomeStack.Screen name={screen.accSettings} component={AccountSettings} />
       </HomeStack.Group>
 
-      <HomeStack.Group screenOptions={{presentation:'containedModal'}} >
-      <HomeStack.Screen name={screen.newChat} component={NewChatsScreen} />
+      <HomeStack.Group screenOptions={{presentation:'containedModal', headerShown:false}} >
+
+
+      <HomeStack.Screen name={screen.newChat} component={NewChatScreen} />
 
 
       </HomeStack.Group>
