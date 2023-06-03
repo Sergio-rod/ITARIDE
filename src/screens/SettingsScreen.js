@@ -7,7 +7,8 @@ import screen from '../utils/screenNames';
 import { useNavigation } from '@react-navigation/native';
 import { useDispatch } from 'react-redux';
 import { userLogout } from '../utils/actions/authActions';
-
+import { getFirebaseApp } from "../utils/firebaseHelper";
+import { getAuth, onAuthStateChanged } from "firebase/auth";
 
 const SettingsScreen = () => {
 
@@ -41,6 +42,17 @@ const SettingsScreen = () => {
     </TouchableOpacity>
   );
 
+  const handleLogOut = () => {
+    const app = getFirebaseApp();
+    getAuth(app).signOut().then(() => {
+      navigation.navigate(screen.signUp);
+    }).catch((error) => {
+      
+    });
+
+    dispatch(userLogout())
+  }
+
   return (
     <View style={styles.containerFlat}>
       <FlatList
@@ -52,7 +64,7 @@ const SettingsScreen = () => {
           colorScheme="red"
           variant="link"
           size="md"
-          onPress={() => dispatch(userLogout())}
+          onPress={() => handleLogOut()}
         >
           Logout
         </Button>

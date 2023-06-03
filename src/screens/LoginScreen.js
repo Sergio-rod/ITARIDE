@@ -8,7 +8,7 @@ import {
   Text,
   Pressable,
   Icon,
-  Stack
+  Stack,
 } from "native-base";
 import styles from "../utils/styles";
 import { Alert } from "react-native";
@@ -16,10 +16,13 @@ import { useDispatch, useSelector } from "react-redux";
 import screen from "../utils/screenNames";
 import validationSignIn from "../utils/validations/validationSignIn";
 import { signIn } from "../utils/actions/authActions";
-
+import { getFirebaseApp } from "../utils/firebaseHelper";
+import { getAuth, onAuthStateChanged } from "firebase/auth";
 
 const LoginScreen = ({ navigation }) => {
   const dispatch = useDispatch();
+  const app = getFirebaseApp();
+  const auth = getAuth(app);
 
   // authenticate
   const isAuth = useSelector(
@@ -44,9 +47,15 @@ const LoginScreen = ({ navigation }) => {
   };
 
   useEffect(() => {
-    if (isAuth) {
+    /* if (isAuth) {
       navigation.navigate(screen.authenticated);
-    }
+    } */
+
+    onAuthStateChanged(auth, (user) => {
+      if (user) {
+        navigation.navigate(screen.authenticated);
+      }
+    });
   }, [isAuth, navigation]);
 
   const authHandler = async () => {
@@ -72,7 +81,14 @@ const LoginScreen = ({ navigation }) => {
   };
 
   return (
-    <Stack space={3} alignSelf="center" px="4" safeArea mt="5" w={{ base: "100%", md: "50%" }}>
+    <Stack
+      space={3}
+      alignSelf="center"
+      px="4"
+      safeArea
+      mt="5"
+      w={{ base: "100%", md: "50%" }}
+    >
       <Box alignSelf="center">
         <Text bold fontSize="3xl" alignContent="center" size={20}>
           Login
@@ -112,7 +128,9 @@ const LoginScreen = ({ navigation }) => {
           {"pass" in errors ? (
             <FormControl.ErrorMessage>{errors.pass}</FormControl.ErrorMessage>
           ) : (
-            <FormControl.HelperText>We'll keep this between us.</FormControl.HelperText>
+            <FormControl.HelperText>
+              We'll keep this between us.
+            </FormControl.HelperText>
           )}
         </FormControl>
       </Box>
@@ -123,7 +141,7 @@ const LoginScreen = ({ navigation }) => {
         </Button>
       </Box>
 
-      <Box alignItems="center">
+      <Box>
         <Button style={styles.buttonCian} onPress={onSubmit}>
           Submit
         </Button>

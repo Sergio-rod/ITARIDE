@@ -61,11 +61,6 @@ export const signIn =  (formData) => {
       dispatch(authenticate({token:accessToken,userData}));
       saveDataToStorage(accessToken,uid,expiryDate)
 
-      
-
-
-
-
     } catch (error) {
       console.log(error)
       const errorCode = error.code;
@@ -87,6 +82,7 @@ export const userLogout = () =>{
     AsyncStorage.clear();
     // clearTimeout(timer);
     // dispatch(logout());
+    
   }
 }
 
@@ -105,7 +101,14 @@ const createUser = async (formData, userId) => {
     campus: formData.campus,
     controlNumber: formData.controlNumber,
     mail: formData.mail,
-    signUpDate: new Date().toISOString()
+    signUpDate: new Date().toISOString(),
+    latitude: "",
+    longitude: "",
+    largeRadius: 0,
+    userType: "",
+    showLocation: true,
+    needGas: false,
+    gasMoney: 0
   };
 
   const dbRef = ref(getDatabase());

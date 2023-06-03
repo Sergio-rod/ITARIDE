@@ -12,32 +12,29 @@ const Stack = createNativeStackNavigator();
 const HomeScreen = ({ navigation }) => {
  
   return (
-    <Center 
-      alignSelf={'center'} 
-      flex={1} width={'85%'} 
-      height='100%'
-    > 
-      <VStack space={2}  alignItems={'center'}>
-        <Box alignItems={'left'} marginBottom={'5'}>
+    <Center> 
+      <VStack space={2}>
+        <Center marginBottom={'5'}>
           <Heading style={styles.headings}>
             Hola, Ganzo
           </Heading>
-        </Box>
+        </Center>
 
-        <Box
+        <Center
           borderColor={'red'}
           borderRadius={'full'}
           overflow={'hidden'}
         >
           <Avatar size={'2xl'}>
             <Image
+              borderRadius={100}
               source={Ganzo}
               alt={'Avatar'}
               resizeMode={'cover'}
               style={{ width: '100%', height: '100%' }}
             />
           </Avatar>
-        </Box>
+        </Center>
 
         <Box flex={1} flexDirection={'row'}  borderColor={'red'} borderRadius={10} p={5}>
           <VStack spacing={2}>
