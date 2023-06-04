@@ -4,6 +4,7 @@ import { set, child, getDatabase, ref, update } from 'firebase/database';
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { getUserData } from "./userActions";
 import { authenticate } from "../../../store/authSlice";
+import { getToken } from "./notificationActions";
 
 export const signUp =  (formData) => {
   return async dispatch => {
@@ -61,11 +62,6 @@ export const signIn =  (formData) => {
       dispatch(authenticate({token:accessToken,userData}));
       saveDataToStorage(accessToken,uid,expiryDate)
 
-      
-
-
-
-
     } catch (error) {
       console.log(error)
       const errorCode = error.code;
@@ -87,6 +83,7 @@ export const userLogout = () =>{
     AsyncStorage.clear();
     // clearTimeout(timer);
     // dispatch(logout());
+    
   }
 }
 
@@ -98,6 +95,9 @@ export const updatedSignedUserData = async(userId,formData) =>{
 
 
 const createUser = async (formData, userId) => {
+
+  const token = await getToken();
+  
   const userData = {
     userId,
     code: formData.code,
@@ -105,7 +105,15 @@ const createUser = async (formData, userId) => {
     campus: formData.campus,
     controlNumber: formData.controlNumber,
     mail: formData.mail,
-    signUpDate: new Date().toISOString()
+    signUpDate: new Date().toISOString(),
+    latitude: "",
+    longitude: "",
+    largeRadius: 0,
+    userType: "",
+    showLocation: true,
+    needGas: false,
+    gasMoney: 0,
+    notificationToken: token
   };
 
   const dbRef = ref(getDatabase());

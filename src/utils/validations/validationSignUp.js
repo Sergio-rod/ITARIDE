@@ -23,14 +23,14 @@ const validationSignUp = (formData) => {
     },
     pass: {
       presence: { message: "Password is required" },
-      length: {
+      /* length: {
         minimum: 8,
         tooShort: "Password is too short",
       },
       format: {
         pattern: /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[-+_!@#$%^&*.,?]).+$/,
         message: "Must contain a special character",
-      },
+      }, */
     },
   };
 
