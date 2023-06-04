@@ -12,21 +12,22 @@ import {
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { Feather } from "@expo/vector-icons";
+import { useNavigation } from "@react-navigation/native";
+import { useSelector } from "react-redux";
+import Bubble from "../components/Bubble";
+import { createChat } from "../utils/actions/chatActions";
 import blackhole from '../../assets/blackhole.jpg'
 
 import colors from "../../constants/colors";
-import { useSelector } from "react-redux";
 
 const ChatScreen = (props) => {
 
-
-  const userData = useSelector(state => state.auth.userData);
-
-  const storedUsers = useSelector(state => state.users.storedUsers);
+  const userData = useSelector((state) => state.auth.userData);
+  const storedUsers = useSelector((state) => state.users.storedUsers);
 
   const [chatUsers, setChatUsers] = useState([]);
-
   const [messageText, setMessageText] = useState("");
+  const [chatId, setChatId] = useState(props.route?.params?.chatId);
 
   const chatData = props.route?.params?.newChatData;
 
@@ -36,36 +37,47 @@ const ChatScreen = (props) => {
 
     {/*Intercambiar otherUserData.controlNumber -> por el nombre del usuario, igual para mail*/}
 
-    return  otherUserData && `${otherUserData.controlNumber} ${otherUserData.mail}`
-  }
-
-
+    return otherUserData && `${otherUserData.controlNumber} ${otherUserData.mail}`;
+  };
 
   useEffect(() => {
     props.navigation.setOptions({
-      headerTitle:getChatTitleFromName ()  
+      headerTitle: getChatTitleFromName()
     });
 
-
-
     setChatUsers(chatData.users);
-  }, [chatUsers])
+  }, [chatUsers,chatData]);
 
+  const sendMessage = useCallback(async () => {
+    try {
+      let id = chatId;
+      console.log(chatId);
 
-  const sendMessage = useCallback(() => {
+      if (!id) {
+        //not chat id. create the chat
+        id = await createChat(userData.userId, props.route.params.newChatData);
+        setChatId(id);
+
+        console.log(userData);
+      }
+    } catch (error) {
+      console.log(error);
+    }
     setMessageText("");
-  }, [messageText]);
+  }, [messageText, chatId]);
 
   return (
     <SafeAreaView edges={["right", "left", "bottom"]} style={styles.container}>
       <KeyboardAvoidingView
         style={styles.screen}
         behavior={Platform.OS === "ios" ? "padding" : undefined}
-        keyboardVerticalOffset={100}>
-        <ImageBackground
-          source={blackhole}
-          style={styles.backgroundImage}
-        ></ImageBackground>
+        keyboardVerticalOffset={100}
+      >
+        <ImageBackground source={blackhole} style={styles.backgroundImage}>
+          <View style={{ backgroundColor: "transparent" }}>
+            {!chatId && <Bubble text="This is a new chat" type="system" />}
+          </View>
+        </ImageBackground>
 
         <View style={styles.inputContainer}>
           <TouchableOpacity
@@ -111,7 +123,7 @@ const styles = StyleSheet.create({
     flexDirection: "column",
   },
   screen: {
-    flex: 1
+    flex: 1,
   },
   backgroundImage: {
     flex: 1,
@@ -139,6 +151,9 @@ const styles = StyleSheet.create({
     backgroundColor: colors.blue,
     borderRadius: 50,
     padding: 8,
+  },
+  backButton: {
+    paddingHorizontal: 10,
   },
 });
 

@@ -148,7 +148,7 @@ const styles = StyleSheet.create({
     searchContainer: {
         flexDirection: 'row',
         alignItems: 'center',
-        backgroundColor: colors.extraLightGrey,
+        backgroundColor: colors.extralightGrey,
         height: 30,
         marginVertical: 8,
         paddingHorizontal: 8,
@@ -158,7 +158,8 @@ const styles = StyleSheet.create({
     searchBox: {
         marginLeft: 8,
         fontSize: 15,
-        width: '100%'
+        width: '100%',
+      
     },
     noResultsIcon: {
         marginBottom: 20
