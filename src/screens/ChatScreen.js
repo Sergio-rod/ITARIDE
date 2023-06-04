@@ -1,4 +1,4 @@
-import React, { useCallback, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import {
   View,
   Text,
@@ -15,9 +15,42 @@ import { Feather } from "@expo/vector-icons";
 import blackhole from '../../assets/blackhole.jpg'
 
 import colors from "../../constants/colors";
+import { useSelector } from "react-redux";
 
 const ChatScreen = (props) => {
+
+
+  const userData = useSelector(state => state.auth.userData);
+
+  const storedUsers = useSelector(state => state.users.storedUsers);
+
+  const [chatUsers, setChatUsers] = useState([]);
+
   const [messageText, setMessageText] = useState("");
+
+  const chatData = props.route?.params?.newChatData;
+
+  const getChatTitleFromName = () => {
+    const otherUserId = chatUsers.find(uid => uid !== userData.userId);
+    const otherUserData = storedUsers[otherUserId];
+
+    {/*Intercambiar otherUserData.controlNumber -> por el nombre del usuario, igual para mail*/}
+
+    return  otherUserData && `${otherUserData.controlNumber} ${otherUserData.mail}`
+  }
+
+
+
+  useEffect(() => {
+    props.navigation.setOptions({
+      headerTitle:getChatTitleFromName ()  
+    });
+
+
+
+    setChatUsers(chatData.users);
+  }, [chatUsers])
+
 
   const sendMessage = useCallback(() => {
     setMessageText("");
@@ -27,13 +60,13 @@ const ChatScreen = (props) => {
     <SafeAreaView edges={["right", "left", "bottom"]} style={styles.container}>
       <KeyboardAvoidingView
         style={styles.screen}
-        behavior={ Platform.OS === "ios" ? "padding" : undefined}
+        behavior={Platform.OS === "ios" ? "padding" : undefined}
         keyboardVerticalOffset={100}>
-            <ImageBackground
+        <ImageBackground
           source={blackhole}
           style={styles.backgroundImage}
         ></ImageBackground>
-  
+
         <View style={styles.inputContainer}>
           <TouchableOpacity
             style={styles.mediaButton}
