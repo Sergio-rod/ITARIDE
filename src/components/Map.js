@@ -18,7 +18,7 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useNavigation } from "@react-navigation/native";
 import { useFocusEffect } from "@react-navigation/native";
 
-const Map = ({ largeRadius, showLocation, userType, viajero, needGas }) => {
+const Map = ({ largeRadius, showLocation, userType, viajero, needGas, gasMoney }) => {
   const navigation = useNavigation();
   const [userLocation, setUserLocation] = useState(null);
   const mapRef = useRef(null);
@@ -112,6 +112,7 @@ const Map = ({ largeRadius, showLocation, userType, viajero, needGas }) => {
       userType,
       showLocation,
       needGas,
+      gasMoney
     })
       .then(() => {
         console.log("Child actualizado exitosamente");
@@ -137,7 +138,11 @@ const Map = ({ largeRadius, showLocation, userType, viajero, needGas }) => {
   };
 
   const onPressUser = (user) => {
-    navigation.navigate(screen.driver, { user: user });
+    if (viajero === true) {
+      navigation.navigate(screen.driver, { user: user });
+    } else {
+      navigation.navigate(screen.passenger, { user: user, gasMoney });
+    }
   };
 
   return (

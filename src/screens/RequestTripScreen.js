@@ -1,5 +1,13 @@
 import React, { useEffect, useState, useCallback } from "react";
-import { FormControl, VStack, Box, HStack, Image, Center } from "native-base";
+import {
+  FormControl,
+  VStack,
+  Box,
+  HStack,
+  Image,
+  Center,
+  Input,
+} from "native-base";
 import SliderMap from "../components/SliderMap";
 import SwitchButton from "../components/SwitchButtonMap";
 import MapImage from "../../assets/ImageMap.png";
@@ -32,6 +40,8 @@ const RequestTripScreen = ({ navigation }) => {
   const toggleSwitchGas = () => {
     setNeedGas((previousState) => !previousState);
   };
+
+  const [gasMoney, setGasMoney] = useState("")
 
   useFocusEffect(
     useCallback(() => {
@@ -75,6 +85,7 @@ const RequestTripScreen = ({ navigation }) => {
           setLargeRadius(snapshot.val().largeRadius);
           setShowLocation(snapshot.val().showLocation);
           setNeedGas(snapshot.val().needGas);
+          setGasMoney((snapshot.val().gasMoney).toString())
         } catch (error) {
           console.log(error);
         }
@@ -135,7 +146,7 @@ const RequestTripScreen = ({ navigation }) => {
           onValueChange={handleLargeRadiusChange}
         />
 
-        <HStack>
+        <HStack paddingBottom={5}>
           <Box>
             <FormControl.Label>Show my location</FormControl.Label>
             <SwitchButton
@@ -145,10 +156,13 @@ const RequestTripScreen = ({ navigation }) => {
           </Box>
           <Box marginLeft={5}>
             <FormControl.Label>Need gas</FormControl.Label>
-            <SwitchButton 
-              isEnabled={needGas}
-              toggleSwitch={toggleSwitchGas}
-            />
+            <SwitchButton isEnabled={needGas} toggleSwitch={toggleSwitchGas} />
+          </Box>
+          <Box marginLeft={5}>
+            <FormControl>
+              <FormControl.Label>Cuote min. $</FormControl.Label>
+              <Input isDisabled={!needGas} keyboardType="numeric" value={gasMoney} onChangeText={(text) => setGasMoney(text)}/>
+            </FormControl>
           </Box>
         </HStack>
 
@@ -157,6 +171,7 @@ const RequestTripScreen = ({ navigation }) => {
             largeRadius={largeRadius}
             showLocation={showLocation}
             needGas={needGas}
+            gasMoney={gasMoney}
             userType={"viajero"}
             viajero={false}
           />

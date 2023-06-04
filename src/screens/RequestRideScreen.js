@@ -144,6 +144,7 @@ const RequestRideScreen = ({ navigation }) => {
             largeRadius={largeRadius}
             showLocation={showLocation}
             needGas={false}
+            gasMoney={0}
             userType={"conductor"}
             viajero={true}
           />

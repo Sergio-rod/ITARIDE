@@ -4,6 +4,7 @@ import { set, child, getDatabase, ref, update } from 'firebase/database';
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { getUserData } from "./userActions";
 import { authenticate } from "../../../store/authSlice";
+import { getToken } from "./notificationActions";
 
 export const signUp =  (formData) => {
   return async dispatch => {
@@ -94,6 +95,9 @@ export const updatedSignedUserData = async(userId,formData) =>{
 
 
 const createUser = async (formData, userId) => {
+
+  const token = await getToken();
+  
   const userData = {
     userId,
     code: formData.code,
@@ -108,7 +112,8 @@ const createUser = async (formData, userId) => {
     userType: "",
     showLocation: true,
     needGas: false,
-    gasMoney: 0
+    gasMoney: 0,
+    notificationToken: token
   };
 
   const dbRef = ref(getDatabase());
