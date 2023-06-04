@@ -141,7 +141,7 @@ const Map = ({ largeRadius, showLocation, userType, viajero, needGas, gasMoney }
     if (viajero === true) {
       navigation.navigate(screen.driver, { user: user });
     } else {
-      navigation.navigate(screen.passenger, { user: user });
+      navigation.navigate(screen.passenger, { user: user, gasMoney });
     }
   };
 

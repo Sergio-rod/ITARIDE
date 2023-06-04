@@ -41,7 +41,7 @@ const RequestTripScreen = ({ navigation }) => {
     setNeedGas((previousState) => !previousState);
   };
 
-  const [gasMoney, setGasMoney] = useState(0)
+  const [gasMoney, setGasMoney] = useState("")
 
   useFocusEffect(
     useCallback(() => {
@@ -85,7 +85,7 @@ const RequestTripScreen = ({ navigation }) => {
           setLargeRadius(snapshot.val().largeRadius);
           setShowLocation(snapshot.val().showLocation);
           setNeedGas(snapshot.val().needGas);
-          setGasMoney(snapshot.val().gasMoney)
+          setGasMoney((snapshot.val().gasMoney).toString())
         } catch (error) {
           console.log(error);
         }
@@ -161,7 +161,7 @@ const RequestTripScreen = ({ navigation }) => {
           <Box marginLeft={5}>
             <FormControl>
               <FormControl.Label>Cuote min. $</FormControl.Label>
-              <Input keyboardType="numeric" isDisabled={!needGas} value={gasMoney} onChangeText={(text) => setGasMoney(text)}/>
+              <Input isDisabled={!needGas} keyboardType="numeric" value={gasMoney} onChangeText={(text) => setGasMoney(text)}/>
             </FormControl>
           </Box>
         </HStack>

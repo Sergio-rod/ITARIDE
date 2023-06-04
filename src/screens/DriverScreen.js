@@ -20,6 +20,13 @@ import { IconButton } from "native-base";
 import SelectTime from "../components/SelectTime";
 import PassengerRatings from "../components/Stars";
 import { useRoute } from "@react-navigation/native";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import {
+  sendPushNotification,
+  setNotificationMessage,
+} from "../utils/actions/notificationActions";
+import { getDatabase, ref, child, get, update } from "firebase/database";
+import { getFirebaseApp } from "../utils/firebaseHelper";
 
 const DriverScreen = ({ navigation }) => {
   const route = useRoute();
@@ -28,6 +35,58 @@ const DriverScreen = ({ navigation }) => {
   function onPressIcon() {
     navigation.navigate(screen.chat);
   }
+
+  const handleRequest = async () => {
+    const getStored = async () => {
+      const storedAuthInfo = await AsyncStorage.getItem("userData");
+
+      if (!storedAuthInfo) {
+        console.log("No storage found");
+        dispatch(setDidTryAutoLogin());
+        return;
+      }
+
+      const parsedData = JSON.parse(storedAuthInfo);
+      const { userId } = parsedData;
+
+      getUsersData(userId);
+    };
+
+    const getUsersData = async (id) => {
+      try {
+        const app = getFirebaseApp();
+        const dbRef = ref(getDatabase(app));
+        const userRef = child(dbRef, `users/${id}`);
+
+        const snapshot = await get(userRef);
+
+        let token = user.val().notificationToken;
+        let titulo = "Hola";
+        let mensaje = `El usuario ${
+          snapshot.val().mail
+        } quiere tomar un viaje contigo`;
+
+        const messageNotification = setNotificationMessage(
+          token,
+          titulo,
+          mensaje,
+          { data: "" }
+        );
+
+        const response = await sendPushNotification(messageNotification);
+
+        if (response) {
+          console.log("notificacion enviada");
+        } else {
+          console.log("error al enviar la notificacion");
+        }
+      } catch (error) {
+        console.log(error);
+      }
+    };
+
+    getStored();
+  };
 
   return (
     <Center alignSelf={"center"} flex={1} width={"100%"} height="100%">
@@ -102,11 +161,7 @@ const DriverScreen = ({ navigation }) => {
               <Button
                 alignSelf={"center"}
                 style={styles.buttonCian}
-                onPress={() => {
-                  console.log("buton clicked", screen.authenticated);
-
-                  navigation.navigate(screen.authenticated);
-                }}
+                onPress={() => handleRequest()}
               >
                 Request Ride{" "}
               </Button>
