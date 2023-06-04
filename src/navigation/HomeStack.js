@@ -30,6 +30,9 @@ const HomeStackNavigator = () => {
         <HomeStack.Screen name={screen.accSettings} component={AccountSettings} />
       </HomeStack.Group>
 
+
+      {/*SegundoNivel*/}
+
       <HomeStack.Group screenOptions={{presentation:'containedModal', headerShown:true}} >
 
 
