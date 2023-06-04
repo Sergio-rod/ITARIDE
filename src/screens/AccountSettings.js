@@ -1,4 +1,4 @@
-import React, { useEffect, useReducer, useState } from "react";
+import React, { useCallback, useEffect, useReducer, useState } from "react";
 import {
   Box,
   VStack,
@@ -15,12 +15,22 @@ import styles from "../utils/styles";
 import validationSignUp from "../utils/validations/validationSignUp";
 import { signUp, updatedSignedUserData } from "../utils/actions/authActions";
 import { Alert } from "react-native";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { updateLoggeddInUserData } from "../../store/authSlice";
 
 const AccountSettings = (props) => {
-  const userData = useSelector((state) => state.auth.userData);
+  const dispatch = useDispatch();
+  const [showSuccessMessage, setShowSuccessMessage] = useState(false);
 
-  //STATES
+  const userData = useSelector((state) => state.auth.userData);
+  console.log(userData);
+
+  const firstName = userData.firstName || "";
+  const lastName = userData.firstName || "";
+  const about = userData.firstName || "";
+
+
+  // STATES
   const [formData, setFormData] = useState({});
   const [errors, setErrors] = useState({});
 
@@ -35,53 +45,43 @@ const AccountSettings = (props) => {
     return true;
   };
 
-  //   useEffect(() => {
-  //     if (isAuth) {
-  //       navigation.navigate(screen.authenticated);
-  //     }
-  //   }, [isAuth, navigation]);
-
-  //   const authHandler = async () => {
-  //     try {
-  //       const action =  signUp(formData)
-  //       await dispatch(action);
-  //     } catch (error) {
-  //       if (error.message === "This mail is already in use") {
-  //         Alert.alert("Error", error.message);
-  //       } else {
-  //         Alert.alert("Error", error.message);
-  //       }
-  //     }
-  //   };
-
-  const saveHandler = async () => {
+  const saveHandler = useCallback(async () => {
     const updatedValues = formData;
     try {
       await updatedSignedUserData(userData.userId, updatedValues);
+      dispatch(updateLoggeddInUserData({ newData: updatedValues }));
+      setShowSuccessMessage(true);
     } catch (error) {
       console.log(error);
     }
+  }, [formData, dispatch]);
+
+  const hasChanges = () => {
+    const currentValues = formData;
+    return currentValues.firstName != firstName ||
+           currentValues.lastName != lastName ||
+           currentValues.about != about;
   };
 
   const onSubmit = async () => {
-    if (true) {
+    if (hasChanges()) {
       saveHandler();
       console.log("You completed the form!");
     } else {
-      console.log("u must complete all");
+      console.log("You must complete all fields");
     }
   };
 
   return (
     <Stack space={3} px="4" safeArea>
-      <Box marginBottom={5} marginTop={5} alignSelf={"center"}>
-        <Text bold fontSize={"3xl"}>
+      <Box marginBottom={5} marginTop={5} alignSelf="center">
+        <Text bold fontSize="3xl">
           Account Settings
         </Text>
       </Box>
 
       <Box>
-        {/* Email */}
+        {/* First Name */}
         <FormControl isRequired isInvalid={"firstName" in errors}>
           <FormControl.Label>First Name</FormControl.Label>
           <Input
@@ -96,7 +96,7 @@ const AccountSettings = (props) => {
       </Box>
 
       <Box>
-        {/* Email */}
+        {/* Last Name */}
         <FormControl isRequired isInvalid={"lastName" in errors}>
           <FormControl.Label>Last Name</FormControl.Label>
           <Input
@@ -111,7 +111,7 @@ const AccountSettings = (props) => {
       </Box>
 
       <Box>
-        {/* Email */}
+        {/* About Me */}
         <FormControl isRequired isInvalid={"about" in errors}>
           <FormControl.Label>About Me</FormControl.Label>
           <Input
@@ -123,10 +123,14 @@ const AccountSettings = (props) => {
         </FormControl>
       </Box>
 
-      <Box alignItems={"center"}>
-        <Button style={styles.buttonCian} onPress={onSubmit}>
-          Submit
-        </Button>
+      {showSuccessMessage && <Text>Saved</Text>}
+
+      <Box alignItems="center">
+        {hasChanges() && (
+          <Button style={styles.buttonCian} onPress={onSubmit}>
+            Submit
+          </Button>
+        )}
       </Box>
     </Stack>
   );
