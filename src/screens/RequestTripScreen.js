@@ -172,7 +172,7 @@ const RequestTripScreen = ({ navigation }) => {
             showLocation={showLocation}
             needGas={needGas}
             gasMoney={gasMoney}
-            userType={"viajero"}
+            userType={"conductor"}
             viajero={false}
           />
 

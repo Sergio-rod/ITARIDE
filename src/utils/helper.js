@@ -8,16 +8,22 @@ import { FlatList, StyleSheet } from "react-native";
 import DataItem from "../components/DataItem";
 
 const ChatsScreen = props => {
+
     const selectedUser = props.route?.params?.selectedUserId;
 
     const userData = useSelector(state => state.auth.userData);
+
     const storedUsers = useSelector(state => state.users.storedUsers);
+
     const userChats = useSelector(state => {
         const chatsData = state.chats.chatsData;
-        return Object.values(chatsData).sort((a, b) => {
-            return new Date(b.updatedAt) - new Date(a.updatedAt);
+        console.log("userchatsfrom chatscreen",userChats)
+        return Object.values(chatsData).sort((a,b) =>{
+            return new Date(b.updatedAt) - new Date(a.upd);
         });
     });
+    // console.log("userchatsfrom chatscreen",userChats)
+
 
     useEffect(() => {
         props.navigation.setOptions({
@@ -26,14 +32,15 @@ const ChatsScreen = props => {
                     <Item
                         title="New chat"
                         iconName="create-outline"
-                        onPress={() => props.navigation.navigate(screen.newChat)} />
+                        onPress={() => props.navigation.navigate(screen.newChat)}
+                    />
                 </HeaderButtons>
+
             }
-        })
+        });
     }, []);
 
     useEffect(() => {
-
         if (!selectedUser) {
             return;
         }
@@ -48,40 +55,53 @@ const ChatsScreen = props => {
 
     }, [props.route?.params])
 
-    return <View>
 
-        <Text bold marginLeft={5} fontSize={"2xl"}>
-            Chats
-        </Text>
 
-        <FlatList
-            data={userChats}
-            renderItem={(itemData) => {
-                const chatData = itemData.item;
+    return (
+        <View>
 
-                const chatId = chatData.key;
+            <Text marginLeft={5} bold fontSize={"3xl"}>
+                Chats
+            </Text>
+            <FlatList
+                data={userChats}
 
-                const otherUserId = chatData.users.find(uid => uid !== userData.userId);
-                const otherUser = storedUsers[otherUserId];
+                renderItem={(itemData) => {
+                    const chatData = itemData.item;
 
-                if (!otherUser) return;
 
-                const title = `${otherUser.controlNumber} ${otherUser.mail}`;
-                const subTitle = "This will be a message.."
-                // const image = otherUser.profilePicture;
-                console.log(chatId)
+                    const otherUserId = chatData.users.find(uid => uid !== userData.userId)
 
-                return <DataItem
-                    title={title}
-                    subTitle={subTitle}
+                    const otherUser = storedUsers[otherUserId];
+                    if (!otherUser) return;
+
+                    // const title = `${otherUser.name} ${otherUser.lastName}`
+
+                    const title = `${otherUser.controlNumber} ${otherUser.mail}`;
+                    const subTitle = 'This will be a message';
+                    // const image= otherUser.profilePicture;
+
+
+                    return <DataItem
+
+
+                        title={title}
+                        subTitle={subTitle}
                     // image={image}
-                    onPress={() => props.navigation.navigate(screen.chat, { chatId })}
-                />
-            }}
-        />
 
-    </View>
+                    />
+
+
+                }}
+
+            />
+
+
+        </View>
+
+    )
 };
+
 const styles = StyleSheet.create({
     container: {
         flex: 1,

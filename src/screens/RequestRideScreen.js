@@ -145,7 +145,7 @@ const RequestRideScreen = ({ navigation }) => {
             showLocation={showLocation}
             needGas={false}
             gasMoney={0}
-            userType={"conductor"}
+            userType={"viajero"}
             viajero={true}
           />
 

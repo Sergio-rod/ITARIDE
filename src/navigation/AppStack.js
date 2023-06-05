@@ -19,7 +19,7 @@ const AppStack = () => {
   const isAuth = useSelector((state) => state.auth.token !== null && state.auth.token !== '');
   const didTryAutoLogin = useSelector((state) => state.auth.didTryAutoLogin);
 
-  useEffect(() => {
+  useEffect((props) => {
     if (isAuth) {
       navigation.navigate(screen.authenticated);
     } else if (!isAuth && didTryAutoLogin) {

@@ -57,7 +57,9 @@ const NewChatScreen = props => {
             }
             else {
                 setNoResultsFound(false);
+
                 dispatch(setStoredUsers({newUsers: usersResult}))
+                
             }
 
             setIsLoading(false);

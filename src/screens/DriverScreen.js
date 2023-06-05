@@ -31,6 +31,7 @@ import { getFirebaseApp } from "../utils/firebaseHelper";
 const DriverScreen = ({ navigation }) => {
   const route = useRoute();
   const { user } = route.params;
+  console.log(user)
 
   function onPressIcon() {
     navigation.navigate(screen.chat);

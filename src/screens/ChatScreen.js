@@ -15,7 +15,7 @@ import { Feather } from "@expo/vector-icons";
 import { useNavigation } from "@react-navigation/native";
 import { useSelector } from "react-redux";
 import Bubble from "../components/Bubble";
-import { createChat } from "../utils/actions/chatActions";
+import { createChat, sendTextMessage } from "../utils/actions/chatActions";
 import blackhole from '../../assets/blackhole.jpg'
 
 import colors from "../../constants/colors";
@@ -24,16 +24,21 @@ const ChatScreen = (props) => {
 
   const userData = useSelector((state) => state.auth.userData);
   const storedUsers = useSelector((state) => state.users.storedUsers);
+  const storedChats = useSelector(state=>state.chats.chatsData);
+
 
   const [chatUsers, setChatUsers] = useState([]);
   const [messageText, setMessageText] = useState("");
-  const [chatId, setChatId] = useState(props.route?.params?.chatId);
+  const [chatId, setChatId] = useState(props.route?.params?.chatId);//aqui ocurre un error
 
-  const chatData = props.route?.params?.newChatData;
+  const chatData = (chatId && storedChats[chatId]) || props.route?.params?.newChatData;
+
 
   const getChatTitleFromName = () => {
     const otherUserId = chatUsers.find(uid => uid !== userData.userId);
     const otherUserData = storedUsers[otherUserId];
+
+
 
     {/*Intercambiar otherUserData.controlNumber -> por el nombre del usuario, igual para mail*/}
 
@@ -46,7 +51,8 @@ const ChatScreen = (props) => {
     });
 
     setChatUsers(chatData.users);
-  }, [chatUsers,chatData]);
+  }, [chatUsers]);
+
 
   const sendMessage = useCallback(async () => {
     try {
@@ -58,8 +64,14 @@ const ChatScreen = (props) => {
         id = await createChat(userData.userId, props.route.params.newChatData);
         setChatId(id);
 
-        console.log(userData);
+        // console.log(id);
       }
+
+      // console.log("Chat id ",chatId,"Id de usuario ",userData.userId,"Mensaje ",messageText)
+      await sendTextMessage(chatId,userData.userId,messageText);
+
+
+
     } catch (error) {
       console.log(error);
     }
@@ -75,7 +87,13 @@ const ChatScreen = (props) => {
       >
         <ImageBackground source={blackhole} style={styles.backgroundImage}>
           <View style={{ backgroundColor: "transparent" }}>
-            {!chatId && <Bubble text="This is a new chat" type="system" />}
+
+
+            {
+            !chatId && <Bubble text="This is a new chat" type="system" />
+            }
+
+            
           </View>
         </ImageBackground>
 

@@ -10,6 +10,7 @@ const authSlice = createSlice({
     reducers:{
         authenticate: (state,action) =>{
             const {payload} =action;
+            console.log("UserData from auth: ",payload.userData)
             state.token = payload.token;
             state.userData = payload.userData;
             state.didTryAutoLogin = true;
@@ -22,15 +23,15 @@ const authSlice = createSlice({
         logout: (state,action) => {
             state.token = null;
             state.userData=null;
-            state.didTryAutoLogin=null;
+            state.didTryAutoLogin=false;//or null
         },
-        updateLoggeddInUserData: (state,action) =>{
+        updateLoggedInUserData: (state,action) =>{
             state.userData = {...state.userData, ...action.payload.newData}
         }
     }
 })
 export const setDidTryAutoLogin = authSlice.actions.setDidTryAutoLogin;
 export const authenticate = authSlice.actions.authenticate;
-export const updateLoggeddInUserData = authSlice.actions.updateLoggeddInUserData;
+export const updateLoggedInUserData = authSlice.actions.updateLoggedInUserData;
 export const logout = authSlice.actions.logout;
 export default authSlice.reducer;

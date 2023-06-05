@@ -19,9 +19,12 @@ const userSlice = createSlice({
             }
             
             state.storedUsers = existingUsers;
+            console.log("stored users ",state.storedUsers)
         }
     }
-})
+});
+
+
 export const setStoredUsers = userSlice.actions.setStoredUsers;
 
 export default userSlice.reducer;
