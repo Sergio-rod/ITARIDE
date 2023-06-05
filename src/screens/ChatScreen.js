@@ -9,6 +9,7 @@ import {
   TouchableOpacity,
   KeyboardAvoidingView,
   Platform,
+  FlatList,
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { Feather } from "@expo/vector-icons";
@@ -32,19 +33,19 @@ const ChatScreen = (props) => {
 
   const userData = useSelector((state) => state.auth.userData);
   const storedUsers = useSelector((state) => state.users.storedUsers);
-  const storedChats = useSelector(state=>state.chats.chatsData);
+  const storedChats = useSelector(state => state.chats.chatsData);
 
-  const chatMessages = useSelector(state=>{
+  const chatMessages = useSelector(state => {
 
-    if(!chatId) return [];
-    
+    if (!chatId) return [];
+
     const chatMessagesData = state.messages.messagesData[chatId];
 
-    if(!chatMessagesData) return [];
+    if (!chatMessagesData) return [];
 
     const messagesList = [];
 
-    for(const key in chatMessagesData){
+    for (const key in chatMessagesData) {
       const message = chatMessagesData[key];
 
       messagesList.push({
@@ -53,7 +54,7 @@ const ChatScreen = (props) => {
       });
     }
     return messagesList;
-  
+
   });
 
 
@@ -74,7 +75,7 @@ const ChatScreen = (props) => {
 
 
 
-    {/*Intercambiar otherUserData.controlNumber -> por el nombre del usuario, igual para mail*/}
+    {/*Intercambiar otherUserData.controlNumber -> por el nombre del usuario, igual para mail*/ }
 
     return otherUserData && `${otherUserData.controlNumber} ${otherUserData.mail}`;
   };
@@ -102,7 +103,7 @@ const ChatScreen = (props) => {
       }
 
       // console.log("Chat id ",chatId,"Id de usuario ",userData.userId,"Mensaje ",messageText)
-      await sendTextMessage(chatId,userData.userId,messageText);
+      await sendTextMessage(chatId, userData.userId, messageText);
       setMessageText("");
 
 
@@ -111,7 +112,7 @@ const ChatScreen = (props) => {
     } catch (error) {
       console.log(error);
       setErrorBannerText("Message failed to send");
-      setTimeout(()=> setErrorBannerText(""),5000);
+      setTimeout(() => setErrorBannerText(""), 5000);
     }
   }, [messageText, chatId]);
 
@@ -123,17 +124,42 @@ const ChatScreen = (props) => {
         keyboardVerticalOffset={100}
       >
         <ImageBackground source={blackhole} style={styles.backgroundImage}>
-          <View style={{ backgroundColor: "transparent" }}>
+          <View style={{ marginLeft:20,marginRight:20,marginTop:20,marginBottom:20 ,backgroundColor: "transparent" }}>
 
 
             {
-            !chatId && <Bubble text="This is a new chat" type="system" />
+              !chatId && <Bubble text="This is a new chat" type="system" />
             }
             {
-              errorBannerText !== "" && <Bubble text={errorBannerText} type="error"/>
+              errorBannerText !== "" && <Bubble text={errorBannerText} type="error" />
+            }
+            {
+              chatId &&
+              <FlatList
+                data={chatMessages}
+                renderItem={(itemData) => {
+                  const message = itemData.item;
+
+                  const isOwnMessage = message.sentBy == userData.userId;
+
+                  const messageType = isOwnMessage ? "myMessage" : "theirMessage";
+
+                  return <Bubble
+
+                    type={messageType}
+                    text={message.text}
+
+
+
+
+                  />
+
+                }}
+
+              />
             }
 
-            
+
           </View>
         </ImageBackground>
 
