@@ -22,19 +22,48 @@ import colors from "../../constants/colors";
 
 const ChatScreen = (props) => {
 
+
+  const [chatUsers, setChatUsers] = useState([]);
+  const [messageText, setMessageText] = useState("");
+  const [chatId, setChatId] = useState(props.route?.params?.chatId);
+  const [errorBannerText, setErrorBannerText] = useState("");
+
+
+
   const userData = useSelector((state) => state.auth.userData);
   const storedUsers = useSelector((state) => state.users.storedUsers);
   const storedChats = useSelector(state=>state.chats.chatsData);
 
-  const chatMessages = useSelector(state=>state.messages.messagesData);
+  const chatMessages = useSelector(state=>{
 
-  console.log(chatMessages);
+    if(!chatId) return [];
+    
+    const chatMessagesData = state.messages.messagesData[chatId];
+
+    if(!chatMessagesData) return [];
+
+    const messagesList = [];
+
+    for(const key in chatMessagesData){
+      const message = chatMessagesData[key];
+
+      messagesList.push({
+        key,
+        ...message
+      });
+    }
+    return messagesList;
+  
+  });
 
 
 
-  const [chatUsers, setChatUsers] = useState([]);
-  const [messageText, setMessageText] = useState("");
-  const [chatId, setChatId] = useState(props.route?.params?.chatId);//aqui ocurre un error
+  //  console.log(chatMessages);
+
+
+
+
+
 
   const chatData = (chatId && storedChats[chatId]) || props.route?.params?.newChatData;
 
@@ -74,13 +103,16 @@ const ChatScreen = (props) => {
 
       // console.log("Chat id ",chatId,"Id de usuario ",userData.userId,"Mensaje ",messageText)
       await sendTextMessage(chatId,userData.userId,messageText);
+      setMessageText("");
+
 
 
 
     } catch (error) {
       console.log(error);
+      setErrorBannerText("Message failed to send");
+      setTimeout(()=> setErrorBannerText(""),5000);
     }
-    setMessageText("");
   }, [messageText, chatId]);
 
   return (
@@ -96,6 +128,9 @@ const ChatScreen = (props) => {
 
             {
             !chatId && <Bubble text="This is a new chat" type="system" />
+            }
+            {
+              errorBannerText !== "" && <Bubble text={errorBannerText} type="error"/>
             }
 
             

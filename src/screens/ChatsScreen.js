@@ -67,7 +67,7 @@ const ChatsScreen = props => {
                 if (!otherUser) return;
 
                 const title = `${otherUser.controlNumber} ${otherUser.mail}`;
-                const subTitle = "This will be a message.."
+                const subTitle = chatData.latestMessageText || "New chat";
                 // const image = otherUser.profilePicture;
                 console.log(chatId)
 
